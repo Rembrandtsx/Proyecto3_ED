@@ -29,6 +29,10 @@ public class Vertex <K extends Comparable<K>, V, W>{
         adj = new SeparateChainingHashMap<>();
     }
 
+    public Vertex(){
+        adj = new SeparateChainingHashMap<>();
+    }
+
     public K getId() {
         return id;
     }
@@ -59,6 +63,10 @@ public class Vertex <K extends Comparable<K>, V, W>{
 
     public void setEdge(K id, W weight) throws Exception {
         adj.put(id, weight);
+    }
+
+    public void setAdj(IHashMap<K, W> adj){
+        this.adj = adj;
     }
     
     public boolean contains(K id){

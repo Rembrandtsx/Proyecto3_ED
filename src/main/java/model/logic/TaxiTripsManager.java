@@ -1,7 +1,5 @@
 package model.logic;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,9 +8,7 @@ import model.vo.*;
 import org.joda.time.DateTime;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import adapters.DateTimeAdapter;
-import adapters.IArrayListAdapter;
-import adapters.IHashMapAdapter;
+import serializers.*;
 import api.ITaxiTripsManager;
 
 public class TaxiTripsManager implements ITaxiTripsManager
@@ -33,12 +29,13 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	/**
 	 * Graph representing Chicago streets using the services
 	 */
-	private IDiGraph<String, AdjacentServices, ArcServices> serviceGraph;
+	private DiGraph<String, AdjacentServices, ArcServices> serviceGraph;
 
 	/**
 	 * Reference distance to create the vertices
 	 */
 	private double dx;
+	
 	
 	/**
 	 * All the services organized by time ranges, distributed in 30 buckets (ranges) of time
@@ -98,7 +95,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		// create new vertex from initial point
 		// check if the service belongs to some vertex and if the coordinates are valid
 		if(!(servicePLatitude == 0.0 && servicePLongitude == 0.0) && !(serviceDLatitude == 0.0 && serviceDLongitude == 0.0)){
-			String graphKeyIni = servicePLatitude + "-" + servicePLongitude;
+			String graphKeyIni = servicePLatitude + "|" + servicePLongitude;
 			as1 = getClosestServiceCluster(servicePLatitude, servicePLongitude);
 			if(as1 == null){
 				as1 = new AdjacentServices(servicePLatitude, servicePLongitude,
@@ -108,7 +105,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 			as1.addService(s.getTripId());
 
 			// create new vertex form ending point
-			String graphKeyEnd = serviceDLatitude + "-" + serviceDLongitude;
+			String graphKeyEnd = serviceDLatitude + "|" + serviceDLongitude;
 			as2 = getClosestServiceCluster(serviceDLatitude, serviceDLongitude);
 			if(as2 == null){
 				as2 = new AdjacentServices(serviceDLatitude, serviceDLongitude,
@@ -249,21 +246,31 @@ public class TaxiTripsManager implements ITaxiTripsManager
 
     public boolean saveJson() {
 
-		try(Writer writer = new FileWriter("fileGraph/Output.json")) {
-			Gson gson = new GsonBuilder()
-					.registerTypeAdapter(IHashMap.class, new IHashMapAdapter())
-					.registerTypeAdapter(IArrayList.class, new IArrayListAdapter())
-					.registerTypeAdapter(DateTime.class, new DateTimeAdapter())
-					.create();
-			gson.toJson(serviceGraph, writer);
+		try(OutputStreamWriter writer = new FileWriter("fileGraph/Output.json")) {
+			return ServiceGraphSerializer.saveGraph(writer, serviceGraph);
+//			Gson gson = new GsonBuilder()
+//					.registerTypeAdapter(IHashMap.class, new IHashMapAdapter())
+//					.registerTypeAdapter(IArrayList.class, new IArrayListAdapter())
+//					.registerTypeAdapter(DateTime.class, new DateTimeAdapter())
+//					.create();
+//			gson.toJson(serviceGraph, writer);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
+	}
 
+    public DiGraph<String, AdjacentServices, ArcServices> loadJson() {
 
-        return true;
-    }
+		try (InputStreamReader reader = new FileReader("fileGraph/Output.json")) {
+			serviceGraph = ServiceGraphDeserializer.readGraph(reader);
+			return serviceGraph;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 }
 

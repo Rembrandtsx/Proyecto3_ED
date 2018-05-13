@@ -21,7 +21,7 @@ public class AdjacentServices implements Comparable<AdjacentServices>, Serializa
 	private double lonRef;
 	
 	private String serviceRefId;
-	
+
 	private String type;
 	
 	IArrayList<String> services;
@@ -110,6 +110,15 @@ public class AdjacentServices implements Comparable<AdjacentServices>, Serializa
 		return false;
 	}
 
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setServices(IArrayList<String> services) {
+		this.services = services;
+	}
+
 	@Override
 	public int compareTo(AdjacentServices o) {
 		return this.serviceRefId.compareTo(o.getServiceRefId());
@@ -117,6 +126,6 @@ public class AdjacentServices implements Comparable<AdjacentServices>, Serializa
 
 	@Override
 	public String toString() {
-		return latRef + "-" + lonRef;
+		return latRef + "|" + lonRef;
 	}
 }

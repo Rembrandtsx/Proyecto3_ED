@@ -1,10 +1,9 @@
 package api;
 
 
-import model.data_structures.IArrayList;
-import model.data_structures.IDiGraph;
-import model.data_structures.IRedBlackTrees;
-import model.data_structures.LinkedList;
+import model.data_structures.*;
+import model.vo.AdjacentServices;
+import model.vo.ArcServices;
 import model.vo.Service;
 import model.vo.Taxi;
 
@@ -26,6 +25,8 @@ public interface ITaxiTripsManager
 	IDiGraph cargarSistema(String[] files, double refDistance) throws Exception;
 
 	boolean saveJson();
+
+	DiGraph<String, AdjacentServices, ArcServices> loadJson();
 
 
 }

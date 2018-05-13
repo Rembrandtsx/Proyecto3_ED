@@ -26,8 +26,11 @@ public class Controller
 	}
 
 	public static boolean saveJson() {
-		// TODO Auto-generated method stub
 		return manager.saveJson();
+	}
+
+	public static DiGraph<String, AdjacentServices, ArcServices> loadJson(){
+		return manager.loadJson();
 	}
 
 }

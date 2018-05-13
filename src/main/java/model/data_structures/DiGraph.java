@@ -19,7 +19,7 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
         adjList = new SeparateChainingHashMap<>();
     }
 
-    private DiGraph(IHashMap<K, Vertex<K, V, W>> hashMap){
+    public DiGraph(IHashMap<K, Vertex<K, V, W>> hashMap){
         this.adjList = hashMap;
     }
 
@@ -203,7 +203,18 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
         }
         return graphList;
     }
+    
+    public void dfs(Vertex v) {
+    	
+    }
+    
+    public void bfs(Vertex v) {
+    	
+    }
 
+    public void dijkstra(Vertex v) {
+    	
+    }
 
     @Override
     public int compareTo(DiGraph<K, V, W> o) {

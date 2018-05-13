@@ -50,6 +50,26 @@ public class ArcServices implements Serializable{
         numberOfServices++;
     }
 
+    public double getMeanDistance() {
+        return meanDistance;
+    }
+
+    public double getMeanEarnings() {
+        return meanEarnings;
+    }
+
+    public double getMeanTimeStamp() {
+        return meanTimeStamp;
+    }
+
+    public double getNumberOfTolls() {
+        return numberOfTolls;
+    }
+
+    public int getNumberOfServices() {
+        return numberOfServices;
+    }
+
     public void setMeanDistance(double meanDistance) {
         this.meanDistance = meanDistance;
     }

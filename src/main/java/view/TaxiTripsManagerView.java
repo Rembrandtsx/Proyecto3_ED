@@ -13,6 +13,7 @@ import model.vo.*;
  */
 public class TaxiTripsManagerView 
 {
+	private static double refDistance;
 	public static void main(String[] args) 
 	{
 		Scanner sc = new Scanner(System.in);
@@ -59,7 +60,7 @@ public class TaxiTripsManagerView
 
 				// refDIstance
 				System.out.println("Ingrese la distancia de referencia con la cual quiere crear los vértices (metros): ");
-				double refDistance = Double.parseDouble(sc.nextLine());
+				refDistance = Double.parseDouble(sc.nextLine());
 
 				//Memoria y tiempo
 				long memoryBeforeCase1 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -85,8 +86,7 @@ public class TaxiTripsManagerView
 				System.out.println("----------------------------------------------------------------------");
 				System.out.println("Number of vertices: " + graph.numVertices() + "\n" +
 									"Number of edges: " + graph.numEdges() + "\n" +
-									"Reference distances for vertex creation (dx): " + refDistance + "\n" +
-									"For more information about the graph go to 'Leeame.txt' file ");
+									"Reference distances for vertex creation (dx): " + refDistance + "\n");
 				System.out.println("----------------------------------------------------------------------");
 //				System.out.println("Information about vertices (clusters) in the graph: ");
 //				Iterator<String> iter = graph.keys();
@@ -111,6 +111,18 @@ public class TaxiTripsManagerView
 				
 					break;
 				case 3:
+					DiGraph serviceGraph = Controller.loadJson();
+					if(serviceGraph == null){
+						System.out.println("No se pudo cargar desde archivo");
+					}else {
+						System.out.println("The Graph was loaded from file ");
+						System.out.println("----------------------------------------------------------------------");
+						System.out.println("Number of vertices: " + serviceGraph.numVertices() + "\n" +
+								"Number of edges: " + serviceGraph.numEdges() + "\n");
+						System.out.println("----------------------------------------------------------------------");
+					}
+					break;
+				case 4:
 					fin=true;
 					sc.close();
 					break;	
@@ -124,11 +136,12 @@ public class TaxiTripsManagerView
 	private static void printMenu() //
 	{
 		System.out.println("---------ISIS 1206 - Estructuras de datos----------");
-		System.out.println("---------------------Taller 8----------------------");
+		System.out.println("---------------------Proyecto 3: Grafos----------------------");
 		System.out.println("Iniciar la Fuente de Datos a Consultar :");
 		System.out.println("1. Cargar toda la informacion del sistema de una fuente de datos (small, medium o large).");
 		System.out.println("2. Guardar Json");
-		System.out.println("3. Salir");
+		System.out.println("3. Cargar grafo desde Json");
+		System.out.println("4. Salir");
 		System.out.println("Ingrese el numero de la opcion seleccionada y presione <Enter> para confirmar: (e.g., 1):");
 
 	}
