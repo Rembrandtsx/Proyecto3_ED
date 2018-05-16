@@ -57,8 +57,12 @@ public class Vertex <K extends Comparable<K>, V, W>{
         adj.put(id, weight);
     }
 
-    public W getEdge(K id) throws Exception {
-        return adj.get(id);
+    public W getEdge(K id){
+        try {
+            return adj.get(id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void setEdge(K id, W weight) throws Exception {

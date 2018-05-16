@@ -15,12 +15,36 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
      */
     private IHashMap<K, Vertex<K, V, W>> adjList;
 
+    //Depth-First search orders:
+    private IQueue<K> preorderDfs;
+
+    private IQueue<K> postorderDfs;
+
+    private IStack<K> reversePostorderDfs;
+
+    //Strongly connected components:
+    private IHashMap<K, Integer> strongComponents;
+
+    private int countStrongComponents;
+
     public DiGraph(){
         adjList = new SeparateChainingHashMap<>();
+        strongComponents = new SeparateChainingHashMap<>();
+        countStrongComponents = 0;
+        initializeDfsOrders();
     }
 
     public DiGraph(IHashMap<K, Vertex<K, V, W>> hashMap){
         this.adjList = hashMap;
+        strongComponents = new SeparateChainingHashMap<>();
+        countStrongComponents = 0;
+        initializeDfsOrders();
+    }
+
+    private void initializeDfsOrders(){
+        preorderDfs = new List<>();
+        postorderDfs = new List<>();
+        reversePostorderDfs = new List<>();
     }
 
 
@@ -186,6 +210,30 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
  
     }
 
+    public IQueue<K> getPreorderDfs() {
+        return preorderDfs;
+    }
+
+    public IQueue<K> getPostorderDfs() {
+        return postorderDfs;
+    }
+
+    public IStack<K> getReversePostorderDfs() {
+        return reversePostorderDfs;
+    }
+
+    public IHashMap<K, Integer> getStrongComponents() {
+        return strongComponents;
+    }
+
+    public int getCountStrongComponents() {
+        return countStrongComponents;
+    }
+
+    public K getFirstKey(){
+        return adjList.keys().next();
+    }
+
     public ArrayList<DiGraph<K, V, W>> partitionGraph(){
         ArrayList<DiGraph<K, V, W>> graphList = new ArrayList<>();
         int partitionSize = adjList.size() / 6;
@@ -203,13 +251,146 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
         }
         return graphList;
     }
-    
-    public void dfs(Vertex v) {
-    	
+
+    public int outdegreeOfVertex(K id){
+        try {
+            return adjList.get(id).getAdj().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
-    
-    public void bfs(Vertex v) {
-    	
+
+    public int indegreeOfVertex(K id){
+        int indegree = 0;
+        Iterator<K> iter = adjList.keys();
+        while (iter.hasNext()){
+            try {
+                Vertex<K, V, W> v = adjList.get(iter.next());
+                W edge = v.getEdge(id);
+                if (edge != null){
+                    indegree ++;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return indegree;
+    }
+
+    /**
+     * Calculates a given vertex "density" by getting the
+     * percentage of the indegree and outdegree with respect to the total vertices
+     * @param id
+     * @return
+     */
+    public double getVertexDensity(K id){
+        return (indegreeOfVertex(id) + outdegreeOfVertex(id)) / numVertices();
+    }
+
+
+    public void dfs(K id){
+        initializeDfsOrders();
+        dfsHelper(id);
+    }
+
+    private void dfsHelper(K id){
+        IHashMap<K, Boolean> marked = new SeparateChainingHashMap<>();
+        initializeMarking(marked);
+        try {
+            marked.put(id, true);
+            preorderDfs.enqueue(id);
+            LinkedList<K> adj = adjList.get(id).getAdj().toList();
+            adj.listing();
+            for (int i = 0; i < adj.size(); i++) {
+                K key = adj.getCurrent();
+                if(!marked.get(key)){
+                    dfsHelper(key);
+                }
+                adj.next();
+            }
+            postorderDfs.enqueue(id);
+            reversePostorderDfs.push(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public DiGraph<K, V, W> reverseGraph(){
+        DiGraph<K, V, W> reversedGraph = new DiGraph<>();
+        Iterator<K> iterVertices = adjList.keys();
+
+        try {
+            while (iterVertices.hasNext()){
+                Vertex<K, V, W> ini = adjList.get(iterVertices.next());
+                reversedGraph.addVertex(ini.getId(), ini.getVal());
+                Iterator<K> iterAdjacent = ini.getAdj().keys();
+                while (iterAdjacent.hasNext()){
+                    Vertex<K ,V, W> end = adjList.get(iterAdjacent.next());
+                    W edge = ini.getEdge(end.getId());
+                    reversedGraph.addVertex(end.getId(), end.getVal());
+                    reversedGraph.addEdge(end.getId(), ini.getId(), edge);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return reversedGraph;
+    }
+
+    public void calculateStronglyConnectedComponents(){
+        DiGraph<K, V, W> reversedGraph = reverseGraph();
+        reversedGraph.dfs(reversedGraph.getFirstKey());
+        IStack<K> reversePost = reversedGraph.getReversePostorderDfs();
+        IHashMap<K, Boolean> marked = new SeparateChainingHashMap<>();
+        initializeMarking(marked);
+        countStrongComponents = 0;
+
+        reversePost.listing();
+        try {
+            for (int i = 0; i < reversePost.size(); i++) {
+                if(!marked.get(reversePost.getCurrent())){
+                    dfsStrongComponents(reversePost.getCurrent(), marked);
+                    countStrongComponents++;
+                }
+                reversePost.next();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void dfsStrongComponents(K id, IHashMap<K, Boolean> marked){
+        try {
+            marked.put(id, true);
+            strongComponents.put(id, countStrongComponents);
+            LinkedList<K> adj = adjList.get(id).getAdj().toList();
+            adj.listing();
+            for (int i = 0; i < adj.size(); i++) {
+                K key = adj.getCurrent();
+                if(!marked.get(key)){
+                    dfsStrongComponents(key, marked);
+                }
+                adj.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeMarking(IHashMap<K, Boolean> marked){
+        Iterator<K> iter = adjList.keys();
+        while (iter.hasNext()){
+            K key = iter.next();
+            try {
+                marked.put(key, false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void dijkstra(Vertex v) {

@@ -28,5 +28,7 @@ public interface ITaxiTripsManager
 
 	DiGraph<String, AdjacentServices, ArcServices> loadJson();
 
+	AdjacentServices mostCongestedVertex();
+
 
 }

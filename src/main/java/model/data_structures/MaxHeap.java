@@ -1,9 +1,8 @@
 package model.data_structures;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
-public class Heap <T extends  Comparable<T>> implements IHeap<T>{
+public class MaxHeap<T extends  Comparable<T>> implements IHeap<T>{
 
     /**
      * Default size of the array if the user doesn´t specifies it
@@ -21,7 +20,7 @@ public class Heap <T extends  Comparable<T>> implements IHeap<T>{
     public static final String DESCENDING = "DESCENDING";
 
     /**
-     * Array that represents the Binary Heap
+     * Array that represents the Binary MaxHeap
      */
     private T[] arr;
 
@@ -38,14 +37,14 @@ public class Heap <T extends  Comparable<T>> implements IHeap<T>{
     /**
      * Constructs a new priority queue with the default size
      */
-    public Heap(){
+    public MaxHeap(){
         this(DEFAULT_CAPACITY);
     }
 
     /**
      * Constructs a new priority queue with the given size
      */
-    public Heap(int capacity){
+    public MaxHeap(int capacity){
         arr = (T[])new Comparable[capacity ];
         maxSize = capacity;
         size = 0;
@@ -100,7 +99,6 @@ public class Heap <T extends  Comparable<T>> implements IHeap<T>{
      * Removes and returns the maximum element of the heap (the root)
      * @return maximum element
      */
-    @Override
     public T removeMax() {
         T element = arr[1];
 
@@ -117,7 +115,6 @@ public class Heap <T extends  Comparable<T>> implements IHeap<T>{
      * @return maximum element
      * @param c comparator
      */
-    @Override
     public T removeMax( Comparator c) {
         T element = arr[1];
 
@@ -290,7 +287,7 @@ public class Heap <T extends  Comparable<T>> implements IHeap<T>{
     }
 
     /**
-     * Returns the array that represents the Binary Heap
+     * Returns the array that represents the Binary MaxHeap
      * @return
      */
     @Override

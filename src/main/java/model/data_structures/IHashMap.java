@@ -35,6 +35,8 @@ public interface IHashMap<K extends Comparable<K>,V> extends Serializable{
 	 */
 	Iterator<K> keys();
 
+	LinkedList<K> toList();
+
 	/**
 	 * Checks if the key exists in the hash table
 	 * @param key

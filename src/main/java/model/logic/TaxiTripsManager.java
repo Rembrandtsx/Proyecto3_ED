@@ -171,6 +171,68 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		return minAs;
 	}
 
+	/**
+	 * Req1: Returns the most congested vertex in the graph;
+	 * the one with most inward and outer edges.
+	 * @return information of the most congested vertex.
+	 */
+	@Override
+	public AdjacentServices mostCongestedVertex(){
+
+		int maxSum = 0;
+		AdjacentServices maxAs = null;
+		Iterator<String> iterKeys = serviceGraph.keys();
+		while (iterKeys.hasNext()){
+			String key = iterKeys.next();
+			int sum = serviceGraph.indegreeOfVertex(key) + serviceGraph.outdegreeOfVertex(key);
+			if(sum > maxSum){
+				maxSum = sum;
+				maxAs = serviceGraph.getInfoVertex(key);
+			}
+		}
+
+		return maxAs;
+	}
+
+	/**
+	 * Req2: Returns a list with the strongly connected components of the graph
+	 * and their information.
+	 * @return strongly connected components
+	 */
+	public LinkedList<StrongComponent> getStrongComponents(){
+		serviceGraph.calculateStronglyConnectedComponents();
+		IHashMap<String, Integer> sc = serviceGraph.getStrongComponents();
+		LinkedList<StrongComponent> strongComponents = new List<>();
+		initializeStrongComponents(strongComponents, serviceGraph.getCountStrongComponents());
+		ListIterator<String> componentsIds = new ListIterator<>(sc.toList());
+
+		try {
+			for (String id: componentsIds) {
+				int color = sc.get(id);
+				AdjacentServices infoVertex = serviceGraph.getInfoVertex(id);
+				strongComponents.listing();
+				for (int i = 0; i < strongComponents.size(); i++) {
+					StrongComponent component = strongComponents.getCurrent();
+					if (color == component.getColor()){
+						component.addVertex(infoVertex);
+						break;
+					}
+					strongComponents.next();
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
+		return strongComponents;
+	}
+
+	private void initializeStrongComponents(LinkedList<StrongComponent> strongComponents, int size) {
+		strongComponents.listing();
+		for (int i = 0; i < size; i++) {
+			strongComponents.add(new StrongComponent(i));
+		}
+	}
 
 	/**
 	 * Fills an array with the services within the given time range

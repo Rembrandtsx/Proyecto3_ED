@@ -14,14 +14,6 @@ public interface IHeap <T extends Comparable<T>> {
 
 
     /**
-     * Removes and returns the maximum element of the heap (the root)
-     * @return maximum element
-     */
-    T removeMax();
-
-    T removeMax(Comparator c);
-
-    /**
      * Exchanges a given element (k) with the parent node (k/2) until the heap order is satisfied
      * @param index position of the element
      */
@@ -76,7 +68,7 @@ public interface IHeap <T extends Comparable<T>> {
     T get(T e);
 
     /**
-     * Returns the array that represents the Binary Heap
+     * Returns the array that represents the Binary MaxHeap
      * @return
      */
     Object[] getArray();

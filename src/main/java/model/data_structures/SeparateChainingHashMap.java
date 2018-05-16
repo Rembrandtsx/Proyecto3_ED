@@ -176,12 +176,7 @@ public class SeparateChainingHashMap<K extends Comparable<K>,V> implements IHash
 		return val;
 	}
 
-	/**
-	 * Returns an iterator for all the keys in the table
-	 * @return iterator
-	 */
-	@Override
-	public Iterator<K> keys() {
+	public LinkedList<K> toList(){
 		List<K> list = new List();
 		for (int i = 0; i<entries.length; i++){
 			entries[i].listing();
@@ -192,7 +187,16 @@ public class SeparateChainingHashMap<K extends Comparable<K>,V> implements IHash
 			}
 		}
 		list.listing();
-		return new ListIterator<>(list);
+		return list;
+	}
+
+	/**
+	 * Returns an iterator for all the keys in the table
+	 * @return iterator
+	 */
+	@Override
+	public Iterator<K> keys() {
+		return new ListIterator<>(toList());
 	}
 
 	/**

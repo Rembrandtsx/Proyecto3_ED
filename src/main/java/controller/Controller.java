@@ -33,4 +33,9 @@ public class Controller
 		return manager.loadJson();
 	}
 
+	public static AdjacentServices mostCongestedVertex(){
+		return manager.mostCongestedVertex();
+	}
+
+
 }

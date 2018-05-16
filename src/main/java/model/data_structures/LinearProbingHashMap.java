@@ -108,13 +108,18 @@ public class LinearProbingHashMap<K extends Comparable<K>,V> implements IHashMap
 
     @Override
     public Iterator<K> keys() {
+        return new ListIterator<>(toList());
+    }
+
+    @Override
+    public LinkedList<K> toList() {
         List<K> list = new List();
         for (int i = 0; i<entries.length; i++){
             if(entries[i] != null){
                 list.add(entries[i].getKey());
             }
         }
-        return new ListIterator<>(list);
+        return list;
     }
 
     @Override
