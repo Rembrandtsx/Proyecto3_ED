@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import serializers.*;
 import api.ITaxiTripsManager;
+import mapsDraw.MapsDrawer;
 
 public class TaxiTripsManager implements ITaxiTripsManager
 {
@@ -309,15 +310,9 @@ public class TaxiTripsManager implements ITaxiTripsManager
 
 
     public boolean saveJson() {
-
+  
 		try(OutputStreamWriter writer = new FileWriter("fileGraph/Output.json")) {
 			return ServiceGraphSerializer.saveGraph(writer, serviceGraph);
-//			Gson gson = new GsonBuilder()
-//					.registerTypeAdapter(IHashMap.class, new IHashMapAdapter())
-//					.registerTypeAdapter(IArrayList.class, new IArrayListAdapter())
-//					.registerTypeAdapter(DateTime.class, new DateTimeAdapter())
-//					.create();
-//			gson.toJson(serviceGraph, writer);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -336,5 +331,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		}
 
 	}
+    
+    
 }
 

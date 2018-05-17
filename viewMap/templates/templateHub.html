@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Visualizador de Mapas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
+
+  </head>
+  <style>
+          a.btn.disabled1{
+        pointer-events: none;
+        opacity: 0.65;
+        }
+          a.btn.disabled2{
+        pointer-events: none;
+        opacity: 0.65;
+        }
+          a.btn.disabled3{
+        pointer-events: none;
+        opacity: 0.65;
+        }
+          a.btn.disabled4{
+        pointer-events: none;
+        opacity: 0.65;
+        }
+          a.btn.disabled5{
+        pointer-events: none;
+        opacity: 0.65;
+        }
+        a.btn.disabled6{
+        pointer-events: none;
+        opacity: 0.65;
+        }
+
+  </style>
+  <body style="background-color:#30373e;">
+
+
+    <nav class="navbar navbar-dark bg-dark" style="box-shadow: 0 19px 38px rgba(0,0,0,0.30); ">
+      <span class="navbar-brand mb-0 h1">Visualización de Mapas</span>
+    </nav>
+
+    <br>
+    <br>
+    <br>
+    <div class="container">
+      <div class="alert alert-secondary" role="alert">
+      Para visualizar los mapas utilice la aplicacion de java:
+        <ul>
+          <li>Cargue el grafo en el tamaño                    deseado</li>
+          <li>Ejecute el requerimiento del que                desea visualizar el mapa</li>
+          <li>Recargue esta pagina</li>
+        </ul>
+        y se desbloqueara el boton para visualizar el mapa correspendiente al requerimiento deseado.
+    </div>
+    <div class="card-deck" >
+      <div class="card" style="width: 18rem;box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); background-color:#444b51; color:white;" >
+      <img class="card-img-top" src="images/map.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Requerimiento 1</h5>
+        <p class="card-text">Mostrar	en	la	consola	de	texto	la	información	del vértice	más	congestionado	en	Chicago
+    (aquel	que	contiene	la	mayor	cantidad	de	servicios	que	salen	y	llegan	a	él):	su	(latitud,
+    longitud),	total	servicios	que	salieron	y	total	de	servicios	que	llegaron.
+    Visualización:	marque	la	localización	del	vértice	resultante	en	un	mapa	en	Google	Maps</p>
+        <a href="Requerimiento1.html" class="btn btn-warning disabled1" role="button" >Ir al mapa</a>
+
+      </div>
+    </div>
+
+      <div class="card" style="width: 18rem;box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); background-color:#444b51; color:white;" >
+      <img class="card-img-top" src="images/map.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Requerimiento 2</h5>
+        <p class="card-text">Calcule	los	componentes	fuertemente	conexos	presentes	en	el	grafo.	Asígnele	un	color
+    a	los	vértices	que	componen	un	componente.		Retorne	una	lista	en	donde	en	cada	nodo,
+    se	 tiene	la	información	de	un	componente	conexo	 (color,	número	de	vértices	que	lo
+    componen).			Muestre	en	la	consola	de	texto	el	total	de	componentes	identificadas	y	la
+    información	de	la	lista	de	componentes	conexo.
+    Visualización:	Muestre	la	componente	fuertemente	conexa	más	grande	(es	decir,	con	más
+    vértices	del	grafo)	en	un	mapa	en	Google	Maps.	Pinte	los	puntos	centro	de	cada	vértice	de
+    la	componente	resultante	y	los	arcos	que	los	conectan	en	el	mapa.	</p>
+        <a href="Requerimiento2.html" class="btn btn-warning disabled2" role="button" >Ir al mapa</a>
+      </div></div>
+      <div class="card" style="width: 18rem;box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); background-color:#444b51; color:white;" >
+      <img class="card-img-top" src="images/map.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Requerimiento 3</h5>
+        <p class="card-text">Visualización:	 A	 partir	 del	 grafo	 cargado	 al	 inicio	 y	 de	 los	 componentes	 conectados
+    encontrados	 en	 el	 punto	 2,	 	 genere	 un	 mapa	 coloreado	 de	 la	 red	 vial	 de	 Chicago
+    utilizando	Google	Maps,	de	la	siguiente	forma:
+    a. Para	cada	vértice	del	grafo,	calcule	el	radio	del	circulo	de	acuerdo	a	la	"densidad"
+    de	 servicios	 que	 salen	 y	 llegan	 a	 dicho	 vértice.	 Es	 decir	 que	 cada	 nodo	 tiene
+    asociado	un	porcentaje	de	los	servicios	que	salen	y	llegan,	del	total	de	servicios
+    procesados.		Tenga	en	cuenta	que	cada	servicio	se	contabiliza	en	el	vértice	donde
+    inicia	 y	 en	 el	 vértice	 donde	 termina.	 El	 tamaño	 del	 circulo	 a	 dibujar	 es
+    proporcional	a	dicho	porcentaje.	El	color	del	vértice	es	el	color	de	la	componente
+    a	la	que	pertenece.
+    b. El	arco	debe	ser	del	color	del	componente	conectado	al	cual	pertenece	el	vértice
+    del	grafo	donde	inicia	el	servicio.</p>
+        <a href="Requerimiento3.html" class="btn btn-warning disabled3 " role="button" >Ir al mapa</a>
+      </div></div>
+
+    </div>
+      <br>
+      <div class="card-deck">
+          <div class="card" style="width: 18rem;box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); background-color:#444b51; color:white;" >
+      <img class="card-img-top" src="images/map.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Requerimiento 4</h5>
+        <p class="card-text">Encontrar	el	camino de	costo	mínimo	(menor	distancia)		para	un	servicio	que	inicia	en
+    un	 punto	 (latitud,	 longitud)	 escogido	 aleatoriamente	 de	 la	 información	 cargada	 del
+    archivo	 de	 calles	 (StreetLines.csv)	 y	 finaliza	 en	 un	 punto	 (latitud,	 longitud)	 escogido
+    también	de	manera	aleatoria	del	archivo	de	calles.		Inicie	el	camino	en	el	vértice	del
+    grafo	más	cercano	a	su	punto	de	inicio	y	finalícela	en	el	vértice	más	cercano	del	grafo	a
+    su	punto	de	destino.	Muestre	en	la	consola	de	texto	el	camino	a	seguir,	informando	sus
+    vértices,	el	tiempo	estimado,	la	distancia	estimada	y	el	valor	estimado	a	pagar.
+    Visualización:	muestre	el	camino	resultante	en	Google	Maps	(incluyendo	el	punto	original
+    de	inicio	y	el	punto	original	de	destino).</p>
+        <a href="Requerimiento4.html" class="btn btn-warning disabled4 " role="button" >Ir al mapa</a>
+      </div></div>
+
+      <div class="card" style="width: 18rem;box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); background-color:#444b51; color:white;" >
+      <img class="card-img-top" src="images/map.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Requerimiento 5</h5>
+        <p class="card-text">Dado	un	servicio	que	inicia	en	un	punto	(latitud,	longitud)	escogido	aleatoriamente	de
+    la	 información	 cargada	 del	 archivo	 de	 calles	 (StreetLines.csv)	 y	 finaliza	 en	 un	 punto
+    (latitud,	 longitud)	 escogido	 también	 de	 manera	 aleatoria	 del	 archivo	 de	 calles.
+    Aproxime	los	puntos	de	inicio	y	fin	a	los	vértices	más	cercanos	en	el	grafo	y	encuentre
+    los	caminos	de	mayor	y	menor	duración	entre	dichos	puntos.			Muestre	en	la	consola	de
+    texto	los	dos	caminos,	y	para	cada	uno	de	ellos:		sus	vértices,	el	tiempo	estimado,	la
+    distancia	estimada	y	el	valor	estimado	a	pagar.
+    Visualización:	Muestre	los	caminos	generados	en	Google	Maps.</p>
+        <a href="Requerimiento5.html" class="btn btn-warning disabled5" role="button" >Ir al mapa</a>
+      </div></div>
+      <div class="card" style="width: 18rem;box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); background-color:#444b51; color:white;" >
+      <img class="card-img-top" src="images/map.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Requerimiento 6</h5>
+        <p class="card-text">Dado	un	servicio	que	inicia	en	un	punto	(latitud,	longitud)	escogido	aleatoriamente	de
+    la	 información	 cargada	 del	 archivo	 de	 calles	 (StreetLines.csv)	 y	 finaliza	 en	 un	 punto
+    (latitud,	longitud) escogido	también	de	manera	aleatoria	del	archivo	de	calles.		Indique
+    si	 existen	 caminos	 entre	 ambos	 puntos,	 en	 los	 que	 no	 deba	 pagar	 peaje.	 Si	 dichos
+    caminos	existen,	 retorne	una	lista	con	 todos	ellos,	ordenadas	de	menor	a	mayor	por
+    tiempo	y	de	mayor	a	menor	por	costo.
+    Visualización:	Muestre	el	 camino	 sin	 peajes	 de	menor	 tiempo	 y	el	 camino	 sin	 peajes	 de
+    mayor	costo	en	Google	Maps.</p>
+        <a href="Requerimiento6.html" class="btn btn-warning disabled6" role="button" >Ir al mapa</a>
+      </div></div>
+    </div>
+      </div>
+
+    </div>
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+
+  </body>
+</html>
