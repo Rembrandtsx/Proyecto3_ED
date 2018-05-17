@@ -1,8 +1,11 @@
 package view;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import mapsDraw.MapsDrawer;
 import controller.Controller;
 import model.data_structures.*;
 import model.logic.TaxiTripsManager;
@@ -16,12 +19,21 @@ public class TaxiTripsManagerView
 	private static double refDistance;
 	public static void main(String[] args) 
 	{
+		
+		
+		
+		
+		
+		
+		
 		Scanner sc = new Scanner(System.in);
 		boolean fin=false;
 		while(!fin)
 		{
 			//imprime menu
 			printMenu();
+			MapsDrawer dibujo3 = new MapsDrawer();
+			dibujo3.resetActivos();
 
 			//opcion req
 			int option = Integer.parseInt(sc.nextLine());
@@ -33,6 +45,8 @@ public class TaxiTripsManagerView
 
 				//imprime menu cargar
 				printMenuCargar();
+				MapsDrawer dibujo4 = new MapsDrawer();
+				dibujo4.resetActivos();
 
 				//opcion cargar
 				int optionCargar = Integer.parseInt(sc.nextLine());
@@ -102,6 +116,9 @@ public class TaxiTripsManagerView
 				break;
 
 				case 2:
+					MapsDrawer dibujo = new MapsDrawer();
+					dibujo.resetActivos();
+					
 					boolean save = Controller.saveJson();
 				
 						if (save)
@@ -112,6 +129,7 @@ public class TaxiTripsManagerView
 					break;
 				case 3:
 					DiGraph serviceGraph = Controller.loadJson();
+
 					if(serviceGraph == null){
 						System.out.println("No se pudo cargar desde archivo");
 					}else {
@@ -123,6 +141,43 @@ public class TaxiTripsManagerView
 					}
 					break;
 				case 4:
+					fin=true;
+					sc.close();
+					break;	
+				case 5:
+					fin=true;
+					sc.close();
+					break;	
+				case 6:
+					fin=true;
+					sc.close();
+					break;	
+				case 7:
+					fin=true;
+					sc.close();
+					break;	
+				case 8:
+					fin=true;
+					sc.close();
+					break;
+				case 9:
+					fin=true;
+					sc.close();
+					break;	
+				case 10:
+					MapsDrawer dibujo1 = new MapsDrawer();
+					dibujo1.pintarIndex();
+					try 
+					{
+						File f = new File(MapsDrawer.RUTAPRINCIPAL);
+						java.awt.Desktop.getDesktop().browse(f.toURI());
+					} 
+					catch (IOException e) 
+					{
+						e.printStackTrace();
+					}
+					break;	
+				case 11:
 					fin=true;
 					sc.close();
 					break;	
@@ -140,9 +195,18 @@ public class TaxiTripsManagerView
 		System.out.println("Iniciar la Fuente de Datos a Consultar :");
 		System.out.println("1. Cargar toda la informacion del sistema de una fuente de datos (small, medium o large).");
 		System.out.println("2. Guardar Json");
-		System.out.println("3. Cargar grafo desde Json");
-		System.out.println("4. Salir");
+		System.out.println("3. Cargar grafo del Json");
+		System.out.println("4. Dar vertice mas congestionado");
+		System.out.println("5. Componentes fuertemente conexos en el grafo");
+		System.out.println("6. Generar mapa con componentes fuertemente conexas de distintos colores");
+		System.out.println("7. Camino de costo minimo");
+		System.out.println("8. Caminos mayor y menor duración");
+		System.out.println("9. Caminos sin peaje");
+		System.out.println("10. Visualizar Google Maps");
+		System.out.println("11. Salir");
 		System.out.println("Ingrese el numero de la opcion seleccionada y presione <Enter> para confirmar: (e.g., 1):");
+		
+	
 
 	}
 

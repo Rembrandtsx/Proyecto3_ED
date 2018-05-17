@@ -14,6 +14,8 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
      * A hash map with all the vertices in the graph
      */
     private IHashMap<K, Vertex<K, V, W>> adjList;
+    
+    private double dxDistance=0;
 
     //Depth-First search orders:
     private IQueue<K> preorderDfs;
@@ -93,7 +95,12 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
             e.printStackTrace();
         }
     }
-
+    public double getDx() {
+    		return dxDistance;
+    }
+    public void setDx(double dx) {
+    		dxDistance=dx;
+    }
     /**
      * Adds a new edge between two vertices in the graph
      * @param id1  key of the first node
