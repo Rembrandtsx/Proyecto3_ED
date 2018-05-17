@@ -114,7 +114,7 @@ public class MultipleFileIterator implements Iterator<Service> {
 				dropOffLatitude = reader.nextDouble();
 			}else if(name.equals("dropoff_centroid_longitude")){
 				dropOffLongitude = reader.nextDouble();
-			}else if(name.equals("tolls")){
+			}else if(name.equals("tips")){
 				tolls = reader.nextDouble();
 			}
 

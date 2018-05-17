@@ -129,7 +129,9 @@ public class TaxiTripsManager implements ITaxiTripsManager
 			edge.updateMeanDistance(s.getTripMiles());
 			edge.updateMeanEarnings(s.getTripTotal());
 			edge.updateMeanTimeStamp(s.getTripSeconds());
-			edge.updateNumberOfTolls(s.getTolls());
+			if(s.getTolls() != 0){
+				edge.updateNumberOfTolls(s.getTolls());
+			}
 		}
 	}
 

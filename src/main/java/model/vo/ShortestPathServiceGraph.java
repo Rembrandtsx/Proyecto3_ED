@@ -57,7 +57,7 @@ public class ShortestPathServiceGraph {
             int start = mapToInteger.get(ini);
             minHeap.insert(start, 0.0);
             while (!minHeap.isEmpty()){
-                evaluateEdges(graph, minHeap.removeMin(), weightCriteria);
+                evaluateEdges(graph, minHeap.removeMin());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,14 +65,14 @@ public class ShortestPathServiceGraph {
 
     }
 
-    private void evaluateEdges(DiGraph<String,AdjacentServices,ArcServices> graph, int v, String weightCriteria) throws Exception {
+    private void evaluateEdges(DiGraph<String,AdjacentServices,ArcServices> graph, int v) throws Exception {
         String graphKey = mapToString[v];
         Vertex<String,AdjacentServices,ArcServices> vertex = graph.getvertex(graphKey);
         ListIterator<String> adj = new ListIterator<>(vertex.getAdj().toList());
 
         for (String k: adj) {
             int w = mapToInteger.get(k);
-            double weight = getWeight(vertex, k, weightCriteria);
+            double weight = getWeight(vertex, k);
             if(distances[w] > (distances[v] + weight)){
                 distances[w] = distances[v] + weight;
                 path[w] = v;
@@ -85,7 +85,7 @@ public class ShortestPathServiceGraph {
         }
     }
 
-    private double getWeight(Vertex<String,AdjacentServices,ArcServices> ini, String end, String weightCriteria) {
+    private double getWeight(Vertex<String,AdjacentServices,ArcServices> ini, String end) {
         double weight = 0.0;
         ArcServices edge = ini.getEdge(end);
 
@@ -121,4 +121,13 @@ public class ShortestPathServiceGraph {
             mapToString[count] = k;
         }
     }
+
+    public int[] getPath() {
+        return path;
+    }
+
+    public double[] getDistances() {
+        return distances;
+    }
+
 }

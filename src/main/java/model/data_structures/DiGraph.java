@@ -393,9 +393,6 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
         }
     }
 
-    public void dijkstra(Vertex v) {
-    	
-    }
 
     @Override
     public int compareTo(DiGraph<K, V, W> o) {
