@@ -14,7 +14,9 @@ public class MapsDrawer {
 	
 	public void dibujoRequerimiento1(double lat, double lon){
 		System.out.println("Imprimio Mapa");
+		reqMade[0]=true;
 		try {
+			
 			File htmlTemplateFile = new File("viewMap/templates/templateMap.html");
 			String htmlString;
 			htmlString = FileUtils.readFileToString(htmlTemplateFile);
@@ -24,7 +26,8 @@ public class MapsDrawer {
 					"var marker = new google.maps.Marker({" + 
 					"    position: myLatLng," + 
 					"    map: map," + 
-					"    title: 'Vertice mas congestionado'" + 
+					"    title: 'Vertice mas congestionado',"+
+					"  animation: google.maps.Animation.DROP," + 
 					"  });";
 			
 			htmlString = htmlString.replace("$Requerimiento", requerimiento);
@@ -32,6 +35,7 @@ public class MapsDrawer {
 			htmlString = htmlString.replace("//$VARIABLESCRIPT", scriptTag);
 			File newHtmlFile = new File("viewMap/"+requerimiento+".html");
 			FileUtils.writeStringToFile(newHtmlFile, htmlString);		
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,7 +49,7 @@ public class MapsDrawer {
 
 	public void pintarIndex() {
 		try {
-			reqMade[0]=true;
+			
 			File htmlTemplateFile = new File("viewMap/templates/templateHub.html");
 			String htmlString;
 			htmlString = FileUtils.readFileToString(htmlTemplateFile);

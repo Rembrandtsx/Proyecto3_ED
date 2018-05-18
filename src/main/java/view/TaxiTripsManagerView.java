@@ -32,8 +32,7 @@ public class TaxiTripsManagerView
 		{
 			//imprime menu
 			printMenu();
-			MapsDrawer dibujo3 = new MapsDrawer();
-			dibujo3.resetActivos();
+			
 
 			//opcion req
 			int option = Integer.parseInt(sc.nextLine());
@@ -46,7 +45,7 @@ public class TaxiTripsManagerView
 				//imprime menu cargar
 				printMenuCargar();
 				MapsDrawer dibujo4 = new MapsDrawer();
-				dibujo4.resetActivos();
+				
 
 				//opcion cargar
 				int optionCargar = Integer.parseInt(sc.nextLine());
@@ -117,7 +116,8 @@ public class TaxiTripsManagerView
 
 				case 2:
 					MapsDrawer dibujo = new MapsDrawer();
-					dibujo.resetActivos();
+					
+					
 					
 					boolean save = Controller.saveJson();
 				
@@ -141,32 +141,37 @@ public class TaxiTripsManagerView
 					}
 					break;
 				case 4:
-					fin=true;
-					sc.close();
+					
+						dibujo = new MapsDrawer();
+					
+						AdjacentServices m = Controller.mostCongestedVertex();
+						Double lat = m.getLatRef();
+						Double lon = m.getLonRef();
+						System.out.println(lat);
+						System.out.println(lon);
+						dibujo.dibujoRequerimiento1(lat, lon);
+						
+					
+					
 					break;	
 				case 5:
-					fin=true;
-					sc.close();
+					
 					break;	
 				case 6:
-					fin=true;
-					sc.close();
+					
 					break;	
 				case 7:
-					fin=true;
-					sc.close();
+					
 					break;	
 				case 8:
-					fin=true;
-					sc.close();
+					
 					break;
 				case 9:
-					fin=true;
-					sc.close();
+					
 					break;	
 				case 10:
-					MapsDrawer dibujo1 = new MapsDrawer();
-					dibujo1.pintarIndex();
+					dibujo= new MapsDrawer();
+					dibujo.pintarIndex();
 					try 
 					{
 						File f = new File(MapsDrawer.RUTAPRINCIPAL);

@@ -3,6 +3,9 @@ import java.io.*;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+
 import model.data_structures.*;
 import model.vo.*;
 import org.joda.time.DateTime;
@@ -22,6 +25,12 @@ public class TaxiTripsManager implements ITaxiTripsManager
 					"/large/taxi-trips-wrvz-psew-subset-08-02-2017.json"};
 
 
+	
+	/**
+	 * The instance of Maps Drawer so the GUI gets refrshed
+	 */
+	private MapsDrawer dubijante = new MapsDrawer();
+	
 	/**
 	 * The date range of the given files
 	 */
@@ -196,6 +205,9 @@ public class TaxiTripsManager implements ITaxiTripsManager
 
 		return maxAs;
 	}
+	
+	
+	
 
 	/**
 	 * Req2: Returns a list with the strongly connected components of the graph
