@@ -3,7 +3,7 @@ package mapsDraw;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+
 
 import org.apache.commons.io.FileUtils;
 
@@ -40,7 +40,6 @@ public class MapsDrawer {
 	}
 	public void resetActivos() {
 		reqMade = new boolean[6];
-		
 	}
 
 
