@@ -137,7 +137,13 @@ public class ServiceGraphDeserializer {
             reader.beginObject();
             while (reader.hasNext()){
                 String n = reader.nextName();
-                if(n.equals("meanDistance")){
+                if(n.equals("iniVertex")){
+                    edge.setIniVertex(reader.nextString());
+                }
+                else if(n.equals("endVertex")){
+                    edge.setIniVertex(reader.nextString());
+                }
+                else if(n.equals("meanDistance")){
                     edge.setMeanDistance(reader.nextDouble());
                 }
                 else if(n.equals("meanEarnings")){

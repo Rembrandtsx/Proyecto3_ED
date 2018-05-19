@@ -77,6 +77,8 @@ public class ServiceGraphSerializer {
                 String key = iter.next();
                 ArcServices edge = adj.get(key);
                 writer.name(key).beginObject();
+                writer.name("iniVertex").value(edge.getIniVertex());
+                writer.name("endVertex").value(edge.getEndVertex());
                 writer.name("meanDistance").value(edge.getMeanDistance());
                 writer.name("meanEarnings").value(edge.getMeanEarnings());
                 writer.name("meanTimeStamp").value(edge.getMeanTimeStamp());

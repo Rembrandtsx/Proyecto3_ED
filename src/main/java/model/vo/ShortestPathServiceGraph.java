@@ -40,12 +40,17 @@ public class ShortestPathServiceGraph {
 
     private IndexMinHeap<Double> minHeap;
 
+    private int iniVertex;
+
+    private DiGraph<String, AdjacentServices, ArcServices> graph;
+
     public ShortestPathServiceGraph(DiGraph<String, AdjacentServices, ArcServices> graph, String ini, String weightCriteria){
         initializeMappings(graph);
         path = new int[graph.numVertices()];
         distances = new double[graph.numVertices()];
         minHeap = new IndexMinHeap<>(graph.numVertices());
         this.weightCriteria = weightCriteria;
+        this.graph = graph;
 
         // initialize distances:
         for (int i = 0; i < distances.length; i++) {
@@ -54,10 +59,10 @@ public class ShortestPathServiceGraph {
 
         // initialize starting vertex and iterate over priority queue
         try {
-            int start = mapToInteger.get(ini);
-            minHeap.insert(start, 0.0);
+            iniVertex = mapToInteger.get(ini);
+            minHeap.insert(iniVertex, 0.0);
             while (!minHeap.isEmpty()){
-                evaluateEdges(graph, minHeap.removeMin());
+                evaluateEdges(minHeap.removeMin());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,7 +70,7 @@ public class ShortestPathServiceGraph {
 
     }
 
-    private void evaluateEdges(DiGraph<String,AdjacentServices,ArcServices> graph, int v) throws Exception {
+    private void evaluateEdges(int v) throws Exception {
         String graphKey = mapToString[v];
         Vertex<String,AdjacentServices,ArcServices> vertex = graph.getvertex(graphKey);
         ListIterator<String> adj = new ListIterator<>(vertex.getAdj().toList());
@@ -129,5 +134,29 @@ public class ShortestPathServiceGraph {
     public double[] getDistances() {
         return distances;
     }
+
+    public LinkedList<ArcServices> reconstructPath(String endVertex){
+        LinkedList<ArcServices> pathTo = new List<>();
+        try {
+            reconstructPath(iniVertex, mapToInteger.get(endVertex), pathTo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return pathTo;
+    }
+
+    public void reconstructPath(int currentVertex, int endVertex, LinkedList<ArcServices> pathTo) throws Exception {
+        if(currentVertex == endVertex){
+            return;
+        }
+        String current = mapToString[currentVertex];
+        String next = mapToString[path[currentVertex]];
+        ArcServices edge = graph.getInfoEdge(current, next);
+        pathTo.add(edge);
+        reconstructPath(mapToInteger.get(next), endVertex, pathTo);
+    }
+
+
 
 }

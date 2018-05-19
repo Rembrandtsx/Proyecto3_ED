@@ -5,8 +5,12 @@ import java.io.Serializable;
 import model.data_structures.ArrayList;
 import model.data_structures.IArrayList;
 
-public class ArcServices implements Serializable{
+public class ArcServices implements Serializable, Comparable<ArcServices> {
 
+
+    private String iniVertex;
+
+    private String endVertex;
 
     private double meanDistance;
 
@@ -70,6 +74,14 @@ public class ArcServices implements Serializable{
         return numberOfServices;
     }
 
+    public String getIniVertex() {
+        return iniVertex;
+    }
+
+    public String getEndVertex() {
+        return endVertex;
+    }
+
     public void setMeanDistance(double meanDistance) {
         this.meanDistance = meanDistance;
     }
@@ -88,5 +100,13 @@ public class ArcServices implements Serializable{
 
     public void setNumberOfServices(int numberOfServices) {
         this.numberOfServices = numberOfServices;
+    }
+
+    public void setIniVertex(String iniVertex) {
+        this.iniVertex = iniVertex;
+    }
+
+    public void setEndVertex(String endVertex) {
+        this.endVertex = endVertex;
     }
 }

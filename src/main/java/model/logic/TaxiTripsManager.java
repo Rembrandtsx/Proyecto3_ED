@@ -138,6 +138,10 @@ public class TaxiTripsManager implements ITaxiTripsManager
 			if(s.getTolls() != 0){
 				edge.updateNumberOfTolls(s.getTolls());
 			}
+
+			// maintain reference to the incident vertices
+			edge.setIniVertex(graphKeyIni);
+			edge.setEndVertex(graphKeyEnd);
 		}
 	}
 
@@ -263,6 +267,21 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		}
 		return verticesDensity;
 	}
+
+	//TODO: Get random coordinates from Streets.csv for Req4, Req5, and Req6
+
+	/**
+	 * Req4: Returns the information of the shortest distance path between two vertices
+	 * @param ini id of initial vertex
+	 * @param end id of final vertex
+	 * @return A collection of edges
+	 */
+	public LinkedList<ArcServices> getShortestPathByDistance(String ini, String end){
+		ShortestPathServiceGraph sp = new ShortestPathServiceGraph(serviceGraph, ini, ShortestPathServiceGraph.DISTANCE);
+		return sp.reconstructPath(end);
+	}
+
+
 
 	/**
 	 * Fills an array with the services within the given time range
