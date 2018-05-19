@@ -109,4 +109,9 @@ public class ArcServices implements Serializable, Comparable<ArcServices> {
     public void setEndVertex(String endVertex) {
         this.endVertex = endVertex;
     }
+
+    @Override
+    public int compareTo(ArcServices o) {
+        return this.numberOfServices - o.numberOfServices;
+    }
 }
