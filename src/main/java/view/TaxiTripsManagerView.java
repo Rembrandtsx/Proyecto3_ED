@@ -16,16 +16,11 @@ import model.vo.*;
  */
 public class TaxiTripsManagerView 
 {
+	private static MapsDrawer dibujo = new MapsDrawer();
 	private static double refDistance;
 	public static void main(String[] args) 
 	{
-		
-		
-		
-		
-		
-		
-		
+		dibujo.resetActivos();
 		Scanner sc = new Scanner(System.in);
 		boolean fin=false;
 		while(!fin)
@@ -44,7 +39,7 @@ public class TaxiTripsManagerView
 
 				//imprime menu cargar
 				printMenuCargar();
-				MapsDrawer dibujo4 = new MapsDrawer();
+				dibujo.resetActivos();
 				
 
 				//opcion cargar
@@ -115,9 +110,9 @@ public class TaxiTripsManagerView
 				break;
 
 				case 2:
-					MapsDrawer dibujo = new MapsDrawer();
 					
 					
+					dibujo.resetActivos();
 					
 					boolean save = Controller.saveJson();
 				
@@ -129,7 +124,7 @@ public class TaxiTripsManagerView
 					break;
 				case 3:
 					DiGraph serviceGraph = Controller.loadJson();
-
+					dibujo.resetActivos();
 					if(serviceGraph == null){
 						System.out.println("No se pudo cargar desde archivo");
 					}else {
@@ -142,7 +137,7 @@ public class TaxiTripsManagerView
 					break;
 				case 4:
 					
-						dibujo = new MapsDrawer();
+						
 					
 						AdjacentServices m = Controller.mostCongestedVertex();
 						Double lat = m.getLatRef();
@@ -170,7 +165,7 @@ public class TaxiTripsManagerView
 					
 					break;	
 				case 10:
-					dibujo= new MapsDrawer();
+					
 					dibujo.pintarIndex();
 					try 
 					{

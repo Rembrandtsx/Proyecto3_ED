@@ -14,14 +14,15 @@ public class MapsDrawer {
 	
 	public void dibujoRequerimiento1(double lat, double lon){
 		System.out.println("Imprimio Mapa");
-		reqMade[0]=true;
+		
 		try {
-			
+			reqMade[0]=true;
+			System.out.println(reqMade[0]);
 			File htmlTemplateFile = new File("viewMap/templates/templateMap.html");
 			String htmlString;
 			htmlString = FileUtils.readFileToString(htmlTemplateFile);
 			String requerimiento = "Requerimiento1";
-			String listaElemento = "<li>El vertice mas congestionado</li>";
+			String listaElemento = "<li>El vertice FLAG PARA SABER SI MODIFICA congestionado</li>";
 			String scriptTag = "var myLatLng = {lat: "+lat+", lng: "+lon+"};" + 
 					"var marker = new google.maps.Marker({" + 
 					"    position: myLatLng," + 
@@ -49,7 +50,7 @@ public class MapsDrawer {
 
 	public void pintarIndex() {
 		try {
-			
+			System.out.println(reqMade[0]);
 			File htmlTemplateFile = new File("viewMap/templates/templateHub.html");
 			String htmlString;
 			htmlString = FileUtils.readFileToString(htmlTemplateFile);
