@@ -3,7 +3,7 @@ package mapsDraw;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+
 
 import org.apache.commons.io.FileUtils;
 
@@ -14,17 +14,21 @@ public class MapsDrawer {
 	
 	public void dibujoRequerimiento1(double lat, double lon){
 		System.out.println("Imprimio Mapa");
+		
 		try {
+			reqMade[0]=true;
+			System.out.println(reqMade[0]);
 			File htmlTemplateFile = new File("viewMap/templates/templateMap.html");
 			String htmlString;
 			htmlString = FileUtils.readFileToString(htmlTemplateFile);
 			String requerimiento = "Requerimiento1";
-			String listaElemento = "<li>El vertice mas congestionado</li>";
+			String listaElemento = "<li>El vertice FLAG PARA SABER SI MODIFICA congestionado</li>";
 			String scriptTag = "var myLatLng = {lat: "+lat+", lng: "+lon+"};" + 
 					"var marker = new google.maps.Marker({" + 
 					"    position: myLatLng," + 
 					"    map: map," + 
-					"    title: 'Vertice mas congestionado'" + 
+					"    title: 'Vertice mas congestionado',"+
+					"  animation: google.maps.Animation.DROP," + 
 					"  });";
 			
 			htmlString = htmlString.replace("$Requerimiento", requerimiento);
@@ -32,6 +36,7 @@ public class MapsDrawer {
 			htmlString = htmlString.replace("//$VARIABLESCRIPT", scriptTag);
 			File newHtmlFile = new File("viewMap/"+requerimiento+".html");
 			FileUtils.writeStringToFile(newHtmlFile, htmlString);		
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,13 +45,12 @@ public class MapsDrawer {
 	}
 	public void resetActivos() {
 		reqMade = new boolean[6];
-		
 	}
 
 
 	public void pintarIndex() {
 		try {
-			reqMade[0]=true;
+			System.out.println(reqMade[0]);
 			File htmlTemplateFile = new File("viewMap/templates/templateHub.html");
 			String htmlString;
 			htmlString = FileUtils.readFileToString(htmlTemplateFile);

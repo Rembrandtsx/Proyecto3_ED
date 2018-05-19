@@ -36,7 +36,7 @@
       <div class="alert alert-secondary" role="alert">
       En este mapa puede visualizar:
         <ul>
-          $ListaElemento
+          <li>El vertice FLAG PARA SABER SI MODIFICA congestionado</li>
         </ul>
 
       </div>
@@ -49,7 +49,7 @@
         // Styles a map in night mode.
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 41.8500300, lng: -87.6500500},
-            zoom: 15,
+            zoom: 12,
           styles: [
             {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -132,36 +132,8 @@
           ]
         });
 
-var myLatLng = {lat: 41.8500300, lng: -87.6500500};var marker = new google.maps.Marker({    position: myLatLng,    map: map,    title: 'Hello World!'  });var cityCircle = new google.maps.Circle({
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35,
-      map: map,
-      center: {lat: 41.8500300, lng: -87.6500500},
-      radius: 100
-    });
-var cityCircle2 = new google.maps.Circle({
-      strokeColor: '#FFF000',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FFf000',
-      fillOpacity: 0.35,
-      map: map,
-      center: {lat: 41.8200300, lng: -87.6200500},
-      radius: 100
-    });
-var flightPath = new google.maps.Polyline({
-    path: [{lat: 41.8500300, lng: -87.6500500}, {lat: 41.8200300, lng: -87.6200500}],
-    geodesic: true,
-    strokeColor: '#00FF00',
-    strokeOpacity: 1.0,
-    strokeWeight: 1,
-    map:map
-  });
-
-}
+        var myLatLng = {lat: 41.884987192, lng: -87.620992913};var marker = new google.maps.Marker({    position: myLatLng,    map: map,    title: 'Vertice mas congestionado',  animation: google.maps.Animation.DROP,  });
+      }
 
 
 
