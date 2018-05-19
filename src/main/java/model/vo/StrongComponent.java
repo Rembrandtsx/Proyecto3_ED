@@ -2,15 +2,15 @@ package model.vo;
 
 import model.data_structures.ArrayList;
 import model.data_structures.IArrayList;
-import model.data_structures.Vertex;
 
 public class StrongComponent implements Comparable<StrongComponent> {
 	
 	private int color;
-	
+
+
 	private IArrayList<AdjacentServices> vertices;
 
-	public StrongComponent(int color, IArrayList<AdjacentServices> vertices) {
+	public StrongComponent(int color, String vertexId, IArrayList<AdjacentServices> vertices) {
 		this.color = color;
 		this.vertices = vertices;
 	}
@@ -31,6 +31,7 @@ public class StrongComponent implements Comparable<StrongComponent> {
 	public IArrayList<AdjacentServices> getVertices() {
 		return vertices;
 	}
+
 
 	public void setVertices(IArrayList<AdjacentServices> vertices) {
 		this.vertices = vertices;

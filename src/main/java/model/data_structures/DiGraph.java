@@ -293,7 +293,7 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
      * @return
      */
     public double getVertexDensity(K id){
-        return (indegreeOfVertex(id) + outdegreeOfVertex(id)) / numVertices();
+        return (indegreeOfVertex(id) + outdegreeOfVertex(id) + 0.0) / numVertices();
     }
 
 

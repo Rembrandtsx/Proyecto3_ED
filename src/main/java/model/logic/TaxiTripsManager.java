@@ -4,13 +4,9 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
 import model.data_structures.*;
 import model.vo.*;
 import org.joda.time.DateTime;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import serializers.*;
 import api.ITaxiTripsManager;
 import mapsDraw.MapsDrawer;
@@ -247,6 +243,25 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		for (int i = 0; i < size; i++) {
 			strongComponents.add(new StrongComponent(i));
 		}
+	}
+
+	/**
+	 * Req3: Returns a map with the vertices keys and their corresponding densities (percentage of
+	 * inward and outer services )
+	 * @return Hash map with densities
+	 */
+	public IHashMap<String, Double> getVerticesRadius(){
+
+		ListIterator<String> keys = new ListIterator<>(serviceGraph.getAdjList().toList());
+		IHashMap<String, Double> verticesDensity = new SeparateChainingHashMap<>();
+		for (String id: keys) {
+			try {
+				verticesDensity.put(id, serviceGraph.getVertexDensity(id));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return verticesDensity;
 	}
 
 	/**
