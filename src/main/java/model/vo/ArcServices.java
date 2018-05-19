@@ -45,9 +45,9 @@ public class ArcServices implements Serializable, Comparable<ArcServices> {
         meanTimeStamp = (meanTimeStamp + t)/numberOfServices;
     }
 
-    public void updateNumberOfTolls(double t){
+    public void updateNumberOfTolls(){
 
-        numberOfTolls = (numberOfTolls + t);
+        numberOfTolls++;
     }
 
     public void addService(){
