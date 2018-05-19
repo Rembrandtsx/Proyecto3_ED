@@ -251,7 +251,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 
 	/**
 	 * Req3: Returns a map with the vertices keys and their corresponding densities (percentage of
-	 * inward and outer services )
+	 * inward and outer services ).
 	 * @return Hash map with densities
 	 */
 	public IHashMap<String, Double> getVerticesRadius(){
@@ -271,7 +271,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	//TODO: Get random coordinates from Streets.csv for Req4, Req5, and Req6
 
 	/**
-	 * Req4: Returns the information of the shortest distance path between two vertices
+	 * Req4: Returns the information of the shortest distance path between two vertices.
 	 * @param ini id of initial vertex
 	 * @param end id of final vertex
 	 * @return A collection of edges
@@ -281,7 +281,27 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		return sp.reconstructPath(end);
 	}
 
+	/**
+	 * Req5: Returns the information of 2 shortest timed paths between two vertices:
+	 * arrSp[0]: shortest path between the initial and the final vertices.
+	 * arrSp[1]: shortest path between the final and the initial vertices.
+	 * @param ini id of initial vertex
+	 * @param end id of final vertex
+	 * @return An array with the shortest paths
+	 */
+	public LinkedList<ArcServices>[] getShortestPathByTime(String ini, String end){
 
+		LinkedList<ArcServices>[] arrSp = (LinkedList<ArcServices>[]) new Comparable[2];
+		arrSp[0] = new List<>();
+		arrSp[1] = new List<>();
+
+		ShortestPathServiceGraph sp0 = new ShortestPathServiceGraph(serviceGraph, ini, ShortestPathServiceGraph.TIME);
+		arrSp[0] = sp0.reconstructPath(end);
+		ShortestPathServiceGraph sp1 = new ShortestPathServiceGraph(serviceGraph, end, ShortestPathServiceGraph.TIME);
+		arrSp[1] = sp1.reconstructPath(ini);
+
+		return arrSp;
+	}
 
 	/**
 	 * Fills an array with the services within the given time range
