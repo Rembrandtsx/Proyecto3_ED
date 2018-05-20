@@ -136,25 +136,29 @@ public class ShortestPathServiceGraph {
     }
 
     public LinkedList<ArcServices> reconstructPath(String endVertex){
-        LinkedList<ArcServices> pathTo = new List<>();
+        IStack<ArcServices> pathTo = new List<>();
         try {
-            reconstructPath(iniVertex, mapToInteger.get(endVertex), pathTo);
+            reconstructPath(mapToInteger.get(endVertex), iniVertex, pathTo);
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return pathTo;
+        LinkedList<ArcServices> result = new List<>();
+        for (int i = 0; i < pathTo.size(); i++) {
+            result.add(pathTo.pop());
+        }
+        return result;
     }
 
-    public void reconstructPath(int currentVertex, int endVertex, LinkedList<ArcServices> pathTo) throws Exception {
-        if(currentVertex == endVertex){
+    public void reconstructPath(int currentVertex, int iniVertex, IStack<ArcServices> pathTo) throws Exception {
+        if(currentVertex == iniVertex){
             return;
         }
         String current = mapToString[currentVertex];
-        String next = mapToString[path[currentVertex]];
-        ArcServices edge = graph.getInfoEdge(current, next);
-        pathTo.add(edge);
-        reconstructPath(mapToInteger.get(next), endVertex, pathTo);
+        String prev = mapToString[path[currentVertex]];
+        ArcServices edge = graph.getInfoEdge(prev, current);
+        pathTo.push(edge);
+        reconstructPath(mapToInteger.get(prev), iniVertex, pathTo);
     }
 
 

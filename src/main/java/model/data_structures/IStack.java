@@ -25,4 +25,5 @@ public interface IStack<E> {
 	E next();
 	
 	void listing();
+
 }

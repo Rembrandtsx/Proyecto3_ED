@@ -159,6 +159,7 @@ public class List<T extends Comparable<T>>
 		current = root;
 	}
 
+
 	/**
 	 * Returns the current element
 	 * @return current
@@ -297,4 +298,5 @@ public class List<T extends Comparable<T>>
 			size--;
 		}
 	}
+
 }
