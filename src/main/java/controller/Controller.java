@@ -40,4 +40,11 @@ public class Controller
 		return manager.getStrongComponents();
 	}
 
+	public static IHashMap<String, Double> getVerticesRadius() {
+		// TODO Auto-generated method stub
+		return manager.getVerticesRadius();
+	}
+
+
+
 }

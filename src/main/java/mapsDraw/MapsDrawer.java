@@ -3,11 +3,13 @@ package mapsDraw;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import org.apache.commons.io.FileUtils;
 
 import model.data_structures.IArrayList;
+import model.data_structures.IHashMap;
 
 public class MapsDrawer {
 	public static final String RUTAPRINCIPAL = "viewMap/index.html";
@@ -61,7 +63,7 @@ public class MapsDrawer {
 			
 			String scriptTag = "var latlons=[";
 			for(int i = 0; i <vertices.size();i++) {
-				System.out.println(vertices.get(i).toString());
+				
 				String[] latlons= vertices.get(i).toString().split("[|]");
 				
 				scriptTag += "{lat: "+latlons[0]+", lng:"+latlons[1]+" }";
@@ -108,7 +110,56 @@ public class MapsDrawer {
 	}
 	
 	
-	
+	public void dibujoRequerimiento3(IArrayList<IHashMap<String, Double>> arrayParaMapa, IArrayList<String> colores) {
+		System.out.println("Se Creo Mapa de Requerimiento 3");
+		
+		try {
+			reqMade[2]=true;
+			
+			File htmlTemplateFile = new File("viewMap/templates/templateMap.html");
+			String htmlString;
+			htmlString = FileUtils.readFileToString(htmlTemplateFile);
+			String requerimiento = "Requerimiento3";
+			String listaElemento = "<li>Todas las Componentes fuertemente conexas en el grafo</li>"
+					+ "<li>Los vertices que pertenecen a las componentes con tamaño dados por su densidad</li>";
+			String scriptTag = "var data = [";
+			try {
+			for(int i=0; i<arrayParaMapa.size();i++) {
+				scriptTag+="[";
+				IHashMap<String, Double> hash= arrayParaMapa.get(i);
+				int s=0;
+				Iterator<String> keys = hash.keys();
+				LinkedList<String> llaves = new LinkedList<String>();
+				//While Loop
+				
+				scriptTag+="]";
+			}
+			
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			scriptTag += "];";
+			
+			
+			
+			htmlString = htmlString.replace("$Requerimiento", requerimiento);
+			htmlString = htmlString.replace("<!--$ListaElemento-->", listaElemento);
+			htmlString = htmlString.replace("//$VARIABLESCRIPT", scriptTag);
+			File newHtmlFile = new File("viewMap/"+requerimiento+".html");
+			FileUtils.writeStringToFile(newHtmlFile, htmlString);		
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+	}
 	
 	
 	

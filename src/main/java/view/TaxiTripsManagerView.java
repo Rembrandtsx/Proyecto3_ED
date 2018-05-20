@@ -172,6 +172,32 @@ public class TaxiTripsManagerView
 					
 					break;	
 				case 6:
+					LinkedList<StrongComponent> componentesR3 = Controller.getStrongComponents();
+					IHashMap<String, Double> verticesRadius= Controller.getVerticesRadius();
+					IArrayList<IHashMap<String, Double>> arrayParaMapa= new ArrayList<>();
+					IArrayList<String> colores = new ArrayList<>();
+					try {
+					for(int i =0; i<componentesR3.size();i++) {
+							StrongComponent componente = componentesR3.get(i);
+							colores.add(componente.getColor());
+							IHashMap<String, Double> verticesPercentage = new SeparateChainingHashMap<>();
+							for(int j=0;j<componente.getVertices().size();j++) {
+								AdjacentServices verticesComponente=componente.getVertices().get(j);
+								String key = verticesComponente.getLatRef()+"|"+verticesComponente.getLonRef();
+								Double val= verticesRadius.get(key);
+								verticesPercentage.put(key, val);
+							}
+							arrayParaMapa.add(verticesPercentage);
+						}
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					dibujo.dibujoRequerimiento3(arrayParaMapa,colores);
+					
+					
+					
+					
 					
 					break;	
 				case 7:

@@ -32,5 +32,7 @@ public interface ITaxiTripsManager
 
 	LinkedList getStrongComponents();
 
+	IHashMap<String, Double> getVerticesRadius();
+
 
 }
