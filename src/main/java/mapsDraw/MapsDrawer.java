@@ -132,12 +132,13 @@ public class MapsDrawer {
 				LinkedList<String> llaves = new LinkedList<String>();
 				//While Loop
 				
-				scriptTag+="]";
+				scriptTag+="],";
 			}
 			
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+			scriptTag = scriptTag.substring(0, scriptTag.length() - 1);
 			scriptTag += "];";
 			
 			
