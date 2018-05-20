@@ -1,5 +1,6 @@
 package model.data_structures;
 
+import java.nio.file.Path;
 import java.util.Iterator;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Iterator;
  * @param <V> value of a vertex
  * @param <W> weight of an edge
  */
-public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W>, Comparable<DiGraph<K, V, W>>{
+public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W>{
 
     /**
      * A hash map with all the vertices in the graph
@@ -241,24 +242,6 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
         return adjList.keys().next();
     }
 
-    public ArrayList<DiGraph<K, V, W>> partitionGraph(){
-        ArrayList<DiGraph<K, V, W>> graphList = new ArrayList<>();
-        int partitionSize = adjList.size() / 6;
-        int counter = 0;
-        IHashMap<K, Vertex<K, V, W>> hashMap = new SeparateChainingHashMap<>();
-        Iterator<K> keys = adjList.keys();
-
-        for (int i = 0; i < graphList.size(); i++) {
-            graphList.add(new DiGraph<K, V, W>(new SeparateChainingHashMap<>()));
-        }
-
-        while (keys.hasNext()){
-            K key = keys.next();
-            graphList.get(counter/partitionSize).addVertex(key, this.getInfoVertex(key));
-        }
-        return graphList;
-    }
-
     public int outdegreeOfVertex(K id){
         try {
             return adjList.get(id).getAdj().size();
@@ -401,8 +384,4 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
     }
 
 
-    @Override
-    public int compareTo(DiGraph<K, V, W> o) {
-        return 0;
-    }
 }

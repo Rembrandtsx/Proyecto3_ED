@@ -1,5 +1,6 @@
 package model.logic;
 import java.io.*;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -302,6 +303,36 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		arrSp[1] = sp1.reconstructPath(ini);
 
 		return arrSp;
+	}
+
+	/**
+	 * Req6: Returns a descending sorted collection of paths between two vertices
+	 * which doesn´t contain any tolls. The collection is sorted by distance.
+	 * @param ini id of initial vertex
+	 * @param end id of final vertex
+	 * @return collection of paths
+	 */
+	public IHeap<Path> getSortedPathsWithNoTollsByDistance(String ini, String end){
+		BreadthSearchServiceGraph bs = new BreadthSearchServiceGraph(serviceGraph, ini);
+		IHeap<Path> paths = bs.reconstructPath(end, BreadthSearchServiceGraph.DISTANCE);
+		Comparator c = new Path.PathDistanceComparator();
+		paths.heapSort(MaxHeap.DESCENDING, c);
+		return paths;
+	}
+
+	/**
+	 * Req6: Returns an ascending sorted collection of paths between two vertices
+	 * which doesn´t contain any tolls. The collection is sorted by time.
+	 * @param ini id of initial vertex
+	 * @param end id of final vertex
+	 * @return collection of paths
+	 */
+	public IHeap<Path> getSortedPathsWithNoTollsByTime(String ini, String end){
+		BreadthSearchServiceGraph bs = new BreadthSearchServiceGraph(serviceGraph, ini);
+		IHeap<Path> paths = bs.reconstructPath(end, BreadthSearchServiceGraph.TIME);
+		Comparator c = new Path.PathTimeComparator();
+		paths.heapSort(MaxHeap.ASCENDING, c);
+		return paths;
 	}
 
 	/**

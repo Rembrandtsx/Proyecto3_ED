@@ -81,5 +81,4 @@ public interface IDiGraph <K extends Comparable<K>, V, W> extends Serializable{
     
     Iterator<K> keys();
 
-    ArrayList<DiGraph<K, V, W>> partitionGraph();
 }

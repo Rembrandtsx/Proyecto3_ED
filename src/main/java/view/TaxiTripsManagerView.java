@@ -136,9 +136,6 @@ public class TaxiTripsManagerView
 					}
 					break;
 				case 4:
-					
-						
-					
 						AdjacentServices m = Controller.mostCongestedVertex();
 						Double lat = m.getLatRef();
 						Double lon = m.getLonRef();
