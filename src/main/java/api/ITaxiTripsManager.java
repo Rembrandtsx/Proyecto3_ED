@@ -30,5 +30,7 @@ public interface ITaxiTripsManager
 
 	AdjacentServices mostCongestedVertex();
 
+	LinkedList getStrongComponents();
+
 
 }

@@ -223,12 +223,13 @@ public class TaxiTripsManager implements ITaxiTripsManager
 
 		try {
 			for (String id: componentsIds) {
-				int color = sc.get(id);
+				int numID = sc.get(id);	
 				AdjacentServices infoVertex = serviceGraph.getInfoVertex(id);
 				strongComponents.listing();
 				for (int i = 0; i < strongComponents.size(); i++) {
 					StrongComponent component = strongComponents.getCurrent();
-					if (color == component.getColor()){
+					
+					if (numID == component.getNumID()){
 						component.addVertex(infoVertex);
 						break;
 					}
@@ -245,7 +246,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	private void initializeStrongComponents(LinkedList<StrongComponent> strongComponents, int size) {
 		strongComponents.listing();
 		for (int i = 0; i < size; i++) {
-			strongComponents.add(new StrongComponent(i));
+			strongComponents.add(new StrongComponent(StrongComponent.makeRandomColor(), i));
 		}
 	}
 

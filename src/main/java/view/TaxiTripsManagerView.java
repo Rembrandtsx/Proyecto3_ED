@@ -150,6 +150,25 @@ public class TaxiTripsManagerView
 					
 					break;	
 				case 5:
+					LinkedList<StrongComponent> componentes = Controller.getStrongComponents();
+					System.out.println("Componentes fuertemente conexos: " + componentes.size());
+					StrongComponent ns = new StrongComponent(StrongComponent.makeRandomColor(), -1);
+					int n = 1;
+					for (int i =0; i<componentes.size(); i++) {
+						System.out.println("Componente "+(n++)+":");
+						try {
+							System.out.println("Color: "+componentes.get(i).getColor());
+							System.out.println("Número de vertices: "+componentes.get(i).getVertices().size());
+							if(ns.getVertices().size()<componentes.get(i).getVertices().size()) {
+								ns = componentes.get(i);
+							}
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						dibujo.dibujoRequerimiento2(ns.getVertices());
+					}
 					
 					break;	
 				case 6:

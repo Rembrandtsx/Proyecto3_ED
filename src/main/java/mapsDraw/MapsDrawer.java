@@ -7,17 +7,19 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 
+import model.data_structures.IArrayList;
+
 public class MapsDrawer {
 	public static final String RUTAPRINCIPAL = "viewMap/index.html";
 
 	private boolean reqMade[] = new boolean[6];
 	
 	public void dibujoRequerimiento1(double lat, double lon){
-		System.out.println("Imprimio Mapa");
+		System.out.println("Se Creo Mapa de Requerimiento 1");
 		
 		try {
 			reqMade[0]=true;
-			System.out.println(reqMade[0]);
+			
 			File htmlTemplateFile = new File("viewMap/templates/templateMap.html");
 			String htmlString;
 			htmlString = FileUtils.readFileToString(htmlTemplateFile);
@@ -43,6 +45,49 @@ public class MapsDrawer {
 		}
 		
 	}
+	
+	public void dibujoRequerimiento2(IArrayList vertices) {
+		
+		System.out.println("Se Creo Mapa de Requerimiento 2");
+		
+		try {
+			reqMade[1]=true;
+			
+			File htmlTemplateFile = new File("viewMap/templates/templateMap.html");
+			String htmlString;
+			htmlString = FileUtils.readFileToString(htmlTemplateFile);
+			String requerimiento = "Requerimiento2";
+			String listaElemento = "<li>La componente fuertemente conexa con mayor cantidad de vertices</li>";
+			
+			
+			for(int i = 0; i <vertices.size();i++) {
+				vertices.get(i);
+			}
+			
+			
+			String scriptTag = "";
+			
+			htmlString = htmlString.replace("$Requerimiento", requerimiento);
+			htmlString = htmlString.replace("<!--$ListaElemento-->", listaElemento);
+			htmlString = htmlString.replace("//$VARIABLESCRIPT", scriptTag);
+			File newHtmlFile = new File("viewMap/"+requerimiento+".html");
+			FileUtils.writeStringToFile(newHtmlFile, htmlString);		
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	public void resetActivos() {
 		reqMade = new boolean[6];
 	}

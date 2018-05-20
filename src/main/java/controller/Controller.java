@@ -36,6 +36,8 @@ public class Controller
 	public static AdjacentServices mostCongestedVertex(){
 		return manager.mostCongestedVertex();
 	}
-
+	public static LinkedList getStrongComponents() {
+		return manager.getStrongComponents();
+	}
 
 }
