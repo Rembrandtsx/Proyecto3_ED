@@ -46,7 +46,7 @@ public class MapsDrawer {
 		
 	}
 	
-	public void dibujoRequerimiento2(IArrayList vertices) {
+	public void dibujoRequerimiento2(IArrayList vertices, String color) {
 		
 		System.out.println("Se Creo Mapa de Requerimiento 2");
 		
@@ -59,13 +59,38 @@ public class MapsDrawer {
 			String requerimiento = "Requerimiento2";
 			String listaElemento = "<li>La componente fuertemente conexa con mayor cantidad de vertices</li>";
 			
-			
+			String scriptTag = "var latlons=[";
 			for(int i = 0; i <vertices.size();i++) {
-				vertices.get(i);
+				System.out.println(vertices.get(i).toString());
+				String[] latlons= vertices.get(i).toString().split("[|]");
+				
+				scriptTag += "{lat: "+latlons[0]+", lng:"+latlons[1]+" }";
+						if(i < vertices.size()-1)
+							scriptTag +=",";
 			}
+			scriptTag +="];"
+					+ "var arcos = new google.maps.Polyline({\n" + 
+					"          path: latlons,\n" + 
+					"          geodesic: true,\n" + 
+					"          strokeColor: '"+color+"',\n" + 
+					"          strokeOpacity: 1.0,\n" + 
+					"          strokeWeight: 2,\n"+
+					"		   map:map\n" + 
+					"        });"+ 
+					"latlons.forEach(function(elemento) {"
+					+ "var circulillo = new google.maps.Circle({\n" + 
+					"            strokeColor: '"+color+"',\n" + 
+					"            strokeOpacity: 0.8,\n" + 
+					"            strokeWeight: 2,\n" + 
+					"            fillColor: '"+color+"',\n" + 
+					"            fillOpacity: 0.35,\n" + 
+					"            map: map,\n" + 
+					"            center: elemento,\n" + 
+					"            radius: 100\n" + 
+					"          });"
+					+ "});";
 			
 			
-			String scriptTag = "";
 			
 			htmlString = htmlString.replace("$Requerimiento", requerimiento);
 			htmlString = htmlString.replace("<!--$ListaElemento-->", listaElemento);

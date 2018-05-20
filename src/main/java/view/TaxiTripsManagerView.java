@@ -167,7 +167,7 @@ public class TaxiTripsManagerView
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						dibujo.dibujoRequerimiento2(ns.getVertices());
+						dibujo.dibujoRequerimiento2(ns.getVertices(), ns.getColor());
 					}
 					
 					break;	
