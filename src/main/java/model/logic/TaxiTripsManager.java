@@ -316,9 +316,61 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	}
 	
 	//TODO: Get the nearest Cluster (Adjacent Services) to a set of Lat & Lng
+
+	/**
+	 * Gets nearest cluster of services (AdjacentServices)
+	 * @param lat reference latitude
+	 * @param lon reference longitude
+	 * @return AdjacentServices
+	 */
 	public AdjacentServices getClusterNear(double lat, double lon) {
-		return new AdjacentServices();
+
+		double minDistance = Double.MAX_VALUE;
+		AdjacentServices nearestCluster = new AdjacentServices();
+		ListIterator<String> keys = new ListIterator<>(serviceGraph.getAdjList().toList());
+
+		try {
+			for (String k : keys) {
+				AdjacentServices as = serviceGraph.getInfoVertex(k);
+				double distance = AdjacentServices.calculateDistance(lat, lon, as.getLatRef(), as.getLonRef());
+				if (distance > minDistance){
+					minDistance = distance;
+					nearestCluster = as;
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
+
+		return nearestCluster;
 	}
+
+	/**
+	 * Returns random pair of vertices in the graph.
+	 * verticesIds[0] = initial vertex id
+	 * verticesIds[1] = final vertex id
+	 * @return an array with the ids of the pair of vertices
+	 */
+	public String[] getRandomInitialAndFinalVertices(){
+
+		String[] verticesIds = new String[2];
+
+		String[] iniCoordinates = getRandomStreets();
+		String[] endCoordinates = getRandomStreets();
+
+		AdjacentServices as1 = getClusterNear(Double.parseDouble(iniCoordinates[1]), Double.parseDouble(iniCoordinates[0]));
+		AdjacentServices as2 = getClusterNear(Double.parseDouble(endCoordinates[1]), Double.parseDouble(endCoordinates[0]));
+
+		verticesIds[0] = as1.toString();
+		verticesIds[1] = as2.toString();
+
+		if (as1.equals(as2)){
+			verticesIds =  getRandomInitialAndFinalVertices();
+		}
+		return verticesIds;
+	}
+
 	/**
 	 * Req4: Returns the information of the shortest distance path between two vertices.
 	 * @param ini id of initial vertex

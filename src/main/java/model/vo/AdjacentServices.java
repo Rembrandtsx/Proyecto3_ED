@@ -1,6 +1,7 @@
 package model.vo;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import model.data_structures.ArrayList;
 import model.data_structures.IArrayList;
@@ -128,4 +129,14 @@ public class AdjacentServices implements Comparable<AdjacentServices>, Serializa
 	public String toString() {
 		return latRef + "|" + lonRef;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		AdjacentServices that = (AdjacentServices) o;
+		return Double.compare(that.latRef, latRef) == 0 &&
+				Double.compare(that.lonRef, lonRef) == 0;
+	}
+
 }
