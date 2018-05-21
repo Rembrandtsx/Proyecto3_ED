@@ -141,7 +141,7 @@ public class ServiceGraphDeserializer {
                     edge.setIniVertex(reader.nextString());
                 }
                 else if(n.equals("endVertex")){
-                    edge.setIniVertex(reader.nextString());
+                    edge.setEndVertex(reader.nextString());
                 }
                 else if(n.equals("meanDistance")){
                     edge.setMeanDistance(reader.nextDouble());

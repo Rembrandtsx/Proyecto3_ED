@@ -226,9 +226,10 @@ public class TaxiTripsManagerView
 							System.out.println("|");
 							System.out.println("V");
 							System.out.println("********************************");
-							System.out.println("Vertice Inicio:"+lista.get(i).getIniVertex());
-							System.out.println("Vertice Final:"+lista.get(i).getEndVertex());
+							System.out.println("Vertice Inicio:"+lista.getCurrent().getIniVertex());
+							System.out.println("Vertice Final:"+lista.getCurrent().getEndVertex());
 							System.out.println("********************************");
+							lista.next();
 						}
 						}catch(Exception e) {e.printStackTrace();}
 						System.out.println("-----------FIN DEL CAMINO----------");

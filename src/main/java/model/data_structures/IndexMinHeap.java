@@ -100,7 +100,12 @@ public class IndexMinHeap<K extends Comparable<K>> {
      * @param element element to insert
      */
     public void insert(int index, K element){
-        checkValidIndex(index);
+        if(index < 0 || index >= maxSize){
+            throw new IllegalArgumentException();
+        }
+        if (contains(index)){
+            throw  new NoSuchElementException("index already exists");
+        }
         size ++;
         pq[size] = index;
         qp[index] = size;
@@ -114,18 +119,14 @@ public class IndexMinHeap<K extends Comparable<K>> {
      */
     public int removeMin(){
         if(size == 0){
-            return -1;
+            throw new NoSuchElementException();
         }
         int minIndex = pq[1];
-        exchange(1, size);
-        size--;
+        exchange(1, size--);
         sink(1);
-        if(minIndex == pq[size + 1]){
-            return -1;
-        }
+        assert minIndex == pq[size+1];
         qp[minIndex] = -1;
         elements[minIndex] = null;
-        pq[minIndex + 1] = -1;
         return minIndex;
     }
 
@@ -154,7 +155,7 @@ public class IndexMinHeap<K extends Comparable<K>> {
      * @return true if the first element is greater than the other, false otherwise
      */
     private boolean greater(int i, int j){
-        return elements[pq[i]].compareTo(elements[qp[i]]) > 0;
+        return elements[pq[i]].compareTo(elements[pq[j]]) > 0;
     }
 
     public boolean contains(int index){

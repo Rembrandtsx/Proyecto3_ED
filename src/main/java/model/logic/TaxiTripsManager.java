@@ -380,6 +380,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	 */
 	public LinkedList<ArcServices> getShortestPathByDistance(String ini, String end){
 		ShortestPathServiceGraph sp = new ShortestPathServiceGraph(serviceGraph, ini, ShortestPathServiceGraph.DISTANCE);
+		LinkedList<ArcServices> list = sp.reconstructPath(end);
 		return sp.reconstructPath(end);
 	}
 

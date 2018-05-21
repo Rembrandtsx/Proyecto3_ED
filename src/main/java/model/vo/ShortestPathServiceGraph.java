@@ -56,6 +56,11 @@ public class ShortestPathServiceGraph {
         for (int i = 0; i < distances.length; i++) {
             distances[i] = Double.POSITIVE_INFINITY;
         }
+        try {
+            distances[mapToInteger.get(ini)] = 0.0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // initialize starting vertex and iterate over priority queue
         try {
@@ -122,8 +127,10 @@ public class ShortestPathServiceGraph {
 
         // fill array
         count = 0;
+        keys = new ListIterator<>(graph.getAdjList().toList());
         for(String k: keys){
             mapToString[count] = k;
+            count++;
         }
     }
 
@@ -136,29 +143,33 @@ public class ShortestPathServiceGraph {
     }
 
     public LinkedList<ArcServices> reconstructPath(String endVertex){
-        IStack<ArcServices> pathTo = new List<>();
+        LinkedList<ArcServices> pathTo = new List<>();
         try {
             reconstructPath(mapToInteger.get(endVertex), iniVertex, pathTo);
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        LinkedList<ArcServices> result = new List<>();
-        for (int i = 0; i < pathTo.size(); i++) {
-            result.add(pathTo.pop());
-        }
-        return result;
+//        LinkedList<ArcServices> result = new List<>();
+//        for (int i = 0; i < pathTo.size(); i++) {
+//            result.add(pathTo.pop());
+//        }
+        return pathTo;
     }
 
-    public void reconstructPath(int currentVertex, int iniVertex, IStack<ArcServices> pathTo) throws Exception {
-        if(currentVertex == iniVertex){
-            return;
+    public void reconstructPath(int endVertex, int iniVertex, LinkedList<ArcServices> pathTo) throws Exception {
+
+        int currentVertex = endVertex;
+        while (currentVertex != iniVertex){
+
+            String current = mapToString[currentVertex];
+            String prev = mapToString[path[currentVertex]];
+            ArcServices edge = graph.getInfoEdge(prev, current);
+            pathTo.add(edge);
+
+            currentVertex = mapToInteger.get(prev);
         }
-        String current = mapToString[currentVertex];
-        String prev = mapToString[path[currentVertex]];
-        ArcServices edge = graph.getInfoEdge(prev, current);
-        pathTo.push(edge);
-        reconstructPath(mapToInteger.get(prev), iniVertex, pathTo);
+
     }
 
 
