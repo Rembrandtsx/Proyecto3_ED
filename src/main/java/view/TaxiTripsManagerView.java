@@ -216,8 +216,9 @@ public class TaxiTripsManagerView
 							vertices =  Controller.getRandomVertices(callesIni, callesFin);
 							System.out.println(vertices[0]+"****"+vertices[1]);
 						}
-						
+						System.out.println("Salio del While");
 						LinkedList<ArcServices> lista = Controller.getShortestPathByDistance(vertices[0], vertices[1]);
+						System.out.println(lista.size());
 						System.out.println("Camino de costo minimo: ");
 						System.out.println("-----------------------------------");
 						System.out.println("-----------EL CAMINO---------------");
