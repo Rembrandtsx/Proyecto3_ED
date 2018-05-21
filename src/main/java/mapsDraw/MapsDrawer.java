@@ -122,25 +122,82 @@ public class MapsDrawer {
 			String requerimiento = "Requerimiento3";
 			String listaElemento = "<li>Todas las Componentes fuertemente conexas en el grafo</li>"
 					+ "<li>Los vertices que pertenecen a las componentes con tamaño dados por su densidad</li>";
-			String scriptTag = "var data = [";
+					
+			
+			
+				//[[{"{lat, lon}":radio},{"{lat, lon}":radio},"{lat, lon}":radio{},"{lat, lon}":radio}],[....]]
+			
+			String scriptTag = "var latlons = new Array();\n"
+					+ "var radius = new Array(); \n";
+			scriptTag+="var colores=new Array();\n";
 			try {
 			for(int i=0; i<arrayParaMapa.size();i++) {
-				scriptTag+="[";
+				scriptTag+="colores.push('"+colores.get(i)+"');\n";
+				scriptTag+="var arreglo"+i+" = new Array();\n";
+				scriptTag+="var arregloR"+i+" = new Array();\n";
 				IHashMap<String, Double> hash= arrayParaMapa.get(i);
-				int s=0;
 				Iterator<String> keys = hash.keys();
-				LinkedList<String> llaves = new LinkedList<String>();
-				//While Loop
 				
-				scriptTag+="],";
+				while(keys.hasNext()) {
+						String f = keys.next();
+						String[] latlons = f.split("[|]");
+						scriptTag+="arreglo"+i+".push({lat: "+latlons[0]+", lng: "+latlons[1]+"}) ;\n";
+						scriptTag+="arregloR"+i+".push("+hash.get(f)+");\n";
+					
+					
+				}
+				scriptTag+="latlons.push(arreglo"+i+");\n";
+				scriptTag+="radius.push(arregloR"+i+");\n";
+				
 			}
 			
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 			scriptTag = scriptTag.substring(0, scriptTag.length() - 1);
-			scriptTag += "];";
-			
+			scriptTag += "\n"
+					+ "console.log(latlons);\n"
+					+ "console.log(radius);\n"
+					+ "console.log(colores)\n"
+					+ "var i = 0;\n" + 
+					"for(ubc in latlons){\n" + 
+					"console.log(ubc);\n" + 
+					"var polyline = new google.maps.Polyline({\n" + 
+					"          path: latlons[ubc],\n" + 
+					"          geodesic: true,\n" + 
+					"          strokeColor: colores[i],\n" + 
+					"          strokeOpacity: 1.0,\n" + 
+					"          strokeWeight: 2,\n" + 
+					"          map:map\n" + 
+					"        });\n" + 
+					
+					"\n" + 
+					"\n" + 
+					"i++;\n" + 
+					"}\n"					
+					+ "i=0;\n" + 
+					"latlons.forEach((e)=>{\n" + 
+					"\n" + 
+					"  j=0;\n" + 
+					"  e.forEach((x)=>{\n" + 
+					"\n" + 
+					"    console.log(radius[i][j]);\n" + 
+					"\n" + 
+					"    var compCircle = new google.maps.Circle({\n" + 
+					"                strokeColor: colores[i],\n" + 
+					"                strokeOpacity: 0.8,\n" + 
+					"                strokeWeight: 2,\n" + 
+					"                fillColor: colores[i],\n" + 
+					"                fillOpacity: 0.35,\n" + 
+					"                map: map,\n" + 
+					"                center: x,\n" + 
+					"                radius: radius[i][j]* 1000\n" + 
+					"              });\n" + 
+					"j++;\n" + 
+					"  })\n" + 
+					"  i++;\n" + 
+					"})";
+				
 			
 			
 			htmlString = htmlString.replace("$Requerimiento", requerimiento);
