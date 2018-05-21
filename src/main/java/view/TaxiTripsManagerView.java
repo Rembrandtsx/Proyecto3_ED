@@ -125,6 +125,7 @@ public class TaxiTripsManagerView
 					break;
 				case 3:
 					DiGraph serviceGraph = Controller.loadJson();
+					System.out.println("-- Cargando archivo de calles en './data/StreetLines.csv' ");
 					dibujo.resetActivos();
 					if(serviceGraph == null){
 						System.out.println("No se pudo cargar desde archivo");
@@ -199,15 +200,42 @@ public class TaxiTripsManagerView
 					
 					break;	
 				case 7:
+				
+						
+						String[] callesIni = Controller.getRandomStreets();
+						System.out.println(callesIni[0]+"*****"+callesIni[1]);
+						String[] callesFin= Controller.getRandomStreets();
+						System.out.println(callesFin[0]+"*****"+callesFin[1]);
+						String[] vertices=Controller.getRandomVertices(callesIni, callesFin);
+						System.out.println(vertices[0]+"****"+vertices[1]);
+						while(vertices[0].equals(vertices[1])){
+							callesIni = Controller.getRandomStreets();
+							System.out.println(callesIni[0]+"*****"+callesIni[1]);
+							callesFin= Controller.getRandomStreets();
+							System.out.println(callesFin[0]+"*****"+callesFin[1]);
+							vertices =  Controller.getRandomVertices(callesIni, callesFin);
+							System.out.println(vertices[0]+"****"+vertices[1]);
+						}
+						
+						LinkedList<ArcServices> lista = Controller.getShortestPathByDistance(vertices[0], vertices[1]);
+						System.out.println("Camino de costo minimo: ");
+						System.out.println("-----------------------------------");
+						System.out.println("-----------EL CAMINO---------------");
+						try {
+						for(int i =0; i<lista.size();i++) {
+							System.out.println("|");
+							System.out.println("V");
+							System.out.println("********************************");
+							System.out.println("Vertice Inicio:"+lista.get(i).getIniVertex());
+							System.out.println("Vertice Final:"+lista.get(i).getEndVertex());
+							System.out.println("********************************");
+						}
+						}catch(Exception e) {e.printStackTrace();}
+						System.out.println("-----------FIN DEL CAMINO----------");
+						System.out.println("-----------------------------------");
 					
-					String[] callesIni = Controller.getRandomStreets();
-					System.out.println(callesIni[0]+"--------------"+callesIni[1]);
-					String[] callesFin= Controller.getRandomStreets();
-					System.out.println(callesFin[0]+"--------------"+callesFin[1]);
-					//AdjacentServices clusterIni = Controller.getClusterNear(Double.parseDouble(callesIni[1]), Double.parseDouble(callesIni[0]));
-					//AdjacentServices clusterFin = Controller.getClusterNear(Double.parseDouble(callesFin[1]), Double.parseDouble(callesFin[0]));
-					List nds = new List();
-					dibujo.dibujoRequerimiento4(nds, callesIni, callesFin);
+
+						dibujo.dibujoRequerimiento4(lista, callesIni, callesFin);
 					
 					break;	
 				case 8:
@@ -248,12 +276,12 @@ public class TaxiTripsManagerView
 		System.out.println("1. Cargar toda la informacion del sistema de una fuente de datos (small, medium o large).");
 		System.out.println("2. Guardar Json");
 		System.out.println("3. Cargar grafo del Json");
-		System.out.println("4. Dar vertice mas congestionado");
-		System.out.println("5. Componentes fuertemente conexos en el grafo");
-		System.out.println("6. Generar mapa con componentes fuertemente conexas de distintos colores");
-		System.out.println("7. Camino de costo minimo");
-		System.out.println("8. Caminos mayor y menor duración");
-		System.out.println("9. Caminos sin peaje");
+		System.out.println("4. Obtener vértice más congestionado en Chicago");
+		System.out.println("5. Obtener componentes fuertemente conexoss");
+		System.out.println("6. Generar mapa coloreado de la red vial de Chicago en Google Maps");
+		System.out.println("7. Encontrar camino de menor distancia para dos puntos aleatorios");
+		System.out.println("8. Hallar caminos de mayor y menor duracion entre dos puntos aleatorios");
+		System.out.println("9. Encontrar caminos sin peaje entre dos puntos aleatorios");
 		System.out.println("10. Visualizar Google Maps");
 		System.out.println("11. Salir");
 		System.out.println("Ingrese el numero de la opcion seleccionada y presione <Enter> para confirmar: (e.g., 1):");
@@ -264,6 +292,7 @@ public class TaxiTripsManagerView
 
 	private static void printMenuCargar()
 	{
+		System.out.println("-- Cargando archivo de calles en './data/StreetLines.csv' ");
 		System.out.println("-- Que fuente de datos desea cargar?");
 		System.out.println("-- 1. Small");
 		System.out.println("-- 2. Medium");

@@ -309,8 +309,14 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		String [] puntosRetorno = new String[2];
 			int valorAcceso1= (int) (Math.random()*streets.size());
 			int valorAcceso2= (int)(Math.random()*streets.get(valorAcceso1).getValue().size());
-			puntosRetorno = streets.get(valorAcceso1).getValue().get(valorAcceso2).split("\\s+");
-		
+			String [] puntosRetornoTemp = streets.get(valorAcceso1).getValue().get(valorAcceso2).split("\\s+");
+			if(puntosRetornoTemp[0].equals("")) {
+				puntosRetorno[0]= puntosRetornoTemp[2];
+				puntosRetorno[1]=puntosRetornoTemp[1];
+			}else {
+				puntosRetorno[0]=puntosRetornoTemp[1];
+				puntosRetorno[1]= puntosRetornoTemp[0];
+			}
 		
 		return puntosRetorno;
 	}
@@ -325,7 +331,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	 */
 	public AdjacentServices getClusterNear(double lat, double lon) {
 
-		double minDistance = Double.MAX_VALUE;
+		double minDistance = Double.MIN_VALUE;
 		AdjacentServices nearestCluster = new AdjacentServices();
 		ListIterator<String> keys = new ListIterator<>(serviceGraph.getAdjList().toList());
 
@@ -352,22 +358,17 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	 * verticesIds[1] = final vertex id
 	 * @return an array with the ids of the pair of vertices
 	 */
-	public String[] getRandomInitialAndFinalVertices(){
+	public String[] getRandomInitialAndFinalVertices(String[] iniCoordinates, String[] endCoordinates){
 
 		String[] verticesIds = new String[2];
 
-		String[] iniCoordinates = getRandomStreets();
-		String[] endCoordinates = getRandomStreets();
-
 		AdjacentServices as1 = getClusterNear(Double.parseDouble(iniCoordinates[0]), Double.parseDouble(iniCoordinates[1]));
 		AdjacentServices as2 = getClusterNear(Double.parseDouble(endCoordinates[0]), Double.parseDouble(endCoordinates[1]));
-
+		System.out.println(as1.getLatRef()+"XXXXX"+as1.getLonRef());
+		System.out.println(as2.getLatRef()+"XXXXX"+as2.getLonRef());
 		verticesIds[0] = as1.toString();
 		verticesIds[1] = as2.toString();
 
-		if (as1.equals(as2)){
-			verticesIds =  getRandomInitialAndFinalVertices();
-		}
 		return verticesIds;
 	}
 

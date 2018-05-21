@@ -4,13 +4,15 @@ package mapsDraw;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.LinkedList;
+
 
 import org.apache.commons.io.FileUtils;
 
 import model.data_structures.IArrayList;
 import model.data_structures.IHashMap;
+import model.data_structures.LinkedList;
 import model.data_structures.List;
+import model.vo.ArcServices;
 
 public class MapsDrawer {
 	public static final String RUTAPRINCIPAL = "viewMap/index.html";
@@ -222,7 +224,7 @@ public class MapsDrawer {
 	}
 	
 	
-	public void dibujoRequerimiento4(List camino, String[] callesIni, String[] callesFin) {
+	public void dibujoRequerimiento4(LinkedList<ArcServices> lista, String[] callesIni, String[] callesFin) {
 		System.out.println("Se Creo Mapa de Requerimiento 4");
 		
 		try {

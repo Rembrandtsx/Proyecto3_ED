@@ -53,5 +53,12 @@ public class Controller
 		return manager.getClusterNear(lat,lon);
 	}
 
+	public static String[] getRandomVertices(String[] callesIni, String[] callesFin) {
+		// TODO Auto-generated method stub
+		return manager.getRandomInitialAndFinalVertices(callesIni,callesFin);
+	}
+	public static LinkedList<ArcServices> getShortestPathByDistance(String ini, String end){
+		return manager.getShortestPathByDistance(ini,end);
+	}
 
 }

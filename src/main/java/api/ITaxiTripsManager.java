@@ -38,5 +38,8 @@ public interface ITaxiTripsManager
 
 	AdjacentServices getClusterNear(double lat, double lon);
 
+	String[] getRandomInitialAndFinalVertices(String[] callesIni, String[] callesFin);
+	LinkedList<ArcServices> getShortestPathByDistance(String ini, String end);
+
 
 }
