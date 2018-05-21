@@ -331,7 +331,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	 */
 	public AdjacentServices getClusterNear(double lat, double lon) {
 
-		double minDistance = Double.MIN_VALUE;
+		double minDistance = Double.MAX_VALUE;
 		AdjacentServices nearestCluster = new AdjacentServices();
 		ListIterator<String> keys = new ListIterator<>(serviceGraph.getAdjList().toList());
 
@@ -339,7 +339,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 			for (String k : keys) {
 				AdjacentServices as = serviceGraph.getInfoVertex(k);
 				double distance = AdjacentServices.calculateDistance(lat, lon, as.getLatRef(), as.getLonRef());
-				if (distance > minDistance){
+				if (distance < minDistance){
 					minDistance = distance;
 					nearestCluster = as;
 				}
