@@ -199,6 +199,14 @@ public class TaxiTripsManagerView
 					break;	
 				case 7:
 					
+					String[] callesIni = Controller.getRandomStreets();
+					System.out.println(callesIni[1]+"--------------"+callesIni[2]);
+					String[] callesFin= Controller.getRandomStreets();
+					System.out.println(callesFin[1]+"--------------"+callesFin[2]);
+					AdjacentServices clusterIni = Controller.getClusterNear(Double.parseDouble(callesIni[2]), Double.parseDouble(callesIni[1]));
+					AdjacentServices clusterFini = Controller.getClusterNear(Double.parseDouble(callesFin[2]), Double.parseDouble(callesFin[1]));
+					
+					
 					break;	
 				case 8:
 					

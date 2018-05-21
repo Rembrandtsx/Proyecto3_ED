@@ -34,5 +34,9 @@ public interface ITaxiTripsManager
 
 	IHashMap<String, Double> getVerticesRadius();
 
+	String[] getRandomStreets();
+
+	AdjacentServices getClusterNear(double lat, double lon);
+
 
 }

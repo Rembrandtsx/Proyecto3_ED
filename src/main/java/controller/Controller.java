@@ -45,6 +45,13 @@ public class Controller
 		return manager.getVerticesRadius();
 	}
 
+	public static String[] getRandomStreets() {
+		// TODO Auto-generated method stub
+		return manager.getRandomStreets();
+	}
+	public static AdjacentServices getClusterNear(double lat, double lon) {
+		return manager.getClusterNear(lat,lon);
+	}
 
 
 }

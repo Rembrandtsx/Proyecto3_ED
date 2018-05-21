@@ -20,7 +20,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 			{"/large/taxi-trips-wrvz-psew-subset-02-02-2017.json", "/large/taxi-trips-wrvz-psew-subset-03-02-2017.json", "/large/taxi-trips-wrvz-psew-subset-04-02-2017.json",
 					"/large/taxi-trips-wrvz-psew-subset-05-02-2017.json", "/large/taxi-trips-wrvz-psew-subset-06-02-2017.json", "/large/taxi-trips-wrvz-psew-subset-07-02-2017.json",
 					"/large/taxi-trips-wrvz-psew-subset-08-02-2017.json"};
-
+	public static final String DIRECCION_STREETS="src/main/resources/Streets.csv";
 
 	
 	/**
@@ -43,7 +43,10 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	 */
 	private double dx;
 	
-	
+	/**
+	 * Linked list of Streets
+	 */
+	private ArrayList<Entry<String, ArrayList<String>>> streets;
 	/**
 	 * All the services organized by time ranges, distributed in 30 buckets (ranges) of time
 	 */
@@ -63,7 +66,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	@Override
 	public IDiGraph cargarSistema(String[] files, double refDistance) throws Exception {
 		initializeManager();
-
+		
 		dx = refDistance;
 		MultipleFileIterator iter = new MultipleFileIterator(files);
 		
@@ -73,6 +76,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 				addVertex(s);
 			}
 		}
+		
 		return serviceGraph;
 	}
 
@@ -81,8 +85,34 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		servicesByDateRange = null;
 		filesDateRange = null;
 		dx = 0.0;
+		loadStreets();
 	}
+	private void loadStreets() {
+		 
+	        String line = "";
+	        String cvsSplitBy = ";";
+	        streets = new ArrayList<Entry<String, ArrayList<String>>>();
+	        try (BufferedReader br = new BufferedReader(new FileReader(DIRECCION_STREETS))) {
 
+	            while ((line = br.readLine()) != null) {
+
+	                // use comma as separator
+	                String[] splitted = line.split(cvsSplitBy);
+	                String key= splitted[0];
+	                ArrayList value = new ArrayList<String>();
+	                for (int i =6 ; i <splitted.length;i++) {
+	                	value.add(splitted[i]);
+	                }
+	                
+	                Entry entrada = new Entry(key, value);
+	                streets.add(entrada);
+
+	            }
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	}
 
 	private void addVertex(Service s) {
 		String id = s.getTripId();
@@ -145,8 +175,8 @@ public class TaxiTripsManager implements ITaxiTripsManager
 			edge.setEndVertex(graphKeyEnd);
 		}
 	}
-
-	private AdjacentServices getClosestServiceCluster(double serviceLatitude, double serviceLongitude){
+	
+	public AdjacentServices getClosestServiceCluster(double serviceLatitude, double serviceLongitude){
 
 		Iterator<String> ids = serviceGraph.keys();
 		LinkedList<AdjacentServices> srvList = new List<>();
@@ -271,7 +301,24 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	}
 
 	//TODO: Get random coordinates from Streets.csv for Req4, Req5, and Req6
-
+	/**
+	 * csv randomizer
+	 * @return String[] where String[1] = lng & String[2] = lat
+	 */
+	public String[] getRandomStreets() {
+		String [] puntosRetorno = new String[2];
+			int valorAcceso1= (int) (Math.random()*streets.size());
+			int valorAcceso2= (int)(Math.random()*streets.get(valorAcceso1).getValue().size());
+			puntosRetorno = streets.get(valorAcceso1).getValue().get(valorAcceso2).split("\\s+");
+		
+		
+		return puntosRetorno;
+	}
+	
+	//TODO: Get the nearest Cluster (Adjacent Services) to a set of Lat & Lng
+	public AdjacentServices getClusterNear(double lat, double lon) {
+		return new AdjacentServices();
+	}
 	/**
 	 * Req4: Returns the information of the shortest distance path between two vertices.
 	 * @param ini id of initial vertex
@@ -419,7 +466,7 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	}
 
     public DiGraph<String, AdjacentServices, ArcServices> loadJson() {
-
+    			loadStreets();
 		try (InputStreamReader reader = new FileReader("fileGraph/Output.json")) {
 			serviceGraph = ServiceGraphDeserializer.readGraph(reader);
 			return serviceGraph;

@@ -208,6 +208,7 @@ public class MapsDrawer {
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.err.println("NO SE PUDO PINTAR EL REQUERIMIENTO 3");
 			e.printStackTrace();
 		}
 		
