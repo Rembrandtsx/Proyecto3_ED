@@ -1,5 +1,6 @@
 package view;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -200,12 +201,13 @@ public class TaxiTripsManagerView
 				case 7:
 					
 					String[] callesIni = Controller.getRandomStreets();
-					System.out.println(callesIni[1]+"--------------"+callesIni[2]);
+					System.out.println(callesIni[0]+"--------------"+callesIni[1]);
 					String[] callesFin= Controller.getRandomStreets();
-					System.out.println(callesFin[1]+"--------------"+callesFin[2]);
-					AdjacentServices clusterIni = Controller.getClusterNear(Double.parseDouble(callesIni[2]), Double.parseDouble(callesIni[1]));
-					AdjacentServices clusterFini = Controller.getClusterNear(Double.parseDouble(callesFin[2]), Double.parseDouble(callesFin[1]));
-					
+					System.out.println(callesFin[0]+"--------------"+callesFin[1]);
+					//AdjacentServices clusterIni = Controller.getClusterNear(Double.parseDouble(callesIni[1]), Double.parseDouble(callesIni[0]));
+					//AdjacentServices clusterFin = Controller.getClusterNear(Double.parseDouble(callesFin[1]), Double.parseDouble(callesFin[0]));
+					List nds = new List();
+					dibujo.dibujoRequerimiento4(nds, callesIni, callesFin);
 					
 					break;	
 				case 8:

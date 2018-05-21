@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 
 import model.data_structures.IArrayList;
 import model.data_structures.IHashMap;
+import model.data_structures.List;
 
 public class MapsDrawer {
 	public static final String RUTAPRINCIPAL = "viewMap/index.html";
@@ -221,7 +222,48 @@ public class MapsDrawer {
 	}
 	
 	
-	
+	public void dibujoRequerimiento4(List camino, String[] callesIni, String[] callesFin) {
+		System.out.println("Se Creo Mapa de Requerimiento 4");
+		
+		try {
+			reqMade[3]=true;
+			
+			File htmlTemplateFile = new File("viewMap/templates/templateMap.html");
+			String htmlString;
+			htmlString = FileUtils.readFileToString(htmlTemplateFile);
+			String requerimiento = "Requerimiento4";
+			String listaElemento = "<li>El camino mas corto entre 2 puntos generados aleatoreamente del archivo Streets.csv </li>\n"
+					+ "<li>Los puntos Aleatoreamente generados del Streets.csv fueron:</li><ul>"
+						+ "<li>INICIO</li> <ul>"
+						+ "<li>lat:"+callesIni[1]+"</li>"
+						+ "<li>lng:"+callesIni[0]+"</li> "
+						+ "</ul>"
+						+ "<li>FIN:</li><ul>"
+						+ "<li>lat:"+callesFin[1]+"</li>"
+						+ "<li>lng:"+callesFin[0]+"</li>"
+						+ "</ul>"
+						+ "</ul> "
+					+ "<li>Los vertices aproximados a los puntos aleatorios del Streets.csv son:</li>";
+			String scriptTag = "";
+			
+			htmlString = htmlString.replace("$Requerimiento", requerimiento);
+			htmlString = htmlString.replace("<!--$ListaElemento-->", listaElemento);
+			htmlString = htmlString.replace("//$VARIABLESCRIPT", scriptTag);
+			File newHtmlFile = new File("viewMap/"+requerimiento+".html");
+			FileUtils.writeStringToFile(newHtmlFile, htmlString);		
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public void dibujoRequerimiento5() {
+		
+	}
+	public void dibujoRequerimiento6() {
+		
+	}
 	
 	public void resetActivos() {
 		reqMade = new boolean[6];
