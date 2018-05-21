@@ -359,8 +359,8 @@ public class TaxiTripsManager implements ITaxiTripsManager
 		String[] iniCoordinates = getRandomStreets();
 		String[] endCoordinates = getRandomStreets();
 
-		AdjacentServices as1 = getClusterNear(Double.parseDouble(iniCoordinates[1]), Double.parseDouble(iniCoordinates[0]));
-		AdjacentServices as2 = getClusterNear(Double.parseDouble(endCoordinates[1]), Double.parseDouble(endCoordinates[0]));
+		AdjacentServices as1 = getClusterNear(Double.parseDouble(iniCoordinates[0]), Double.parseDouble(iniCoordinates[1]));
+		AdjacentServices as2 = getClusterNear(Double.parseDouble(endCoordinates[0]), Double.parseDouble(endCoordinates[1]));
 
 		verticesIds[0] = as1.toString();
 		verticesIds[1] = as2.toString();
