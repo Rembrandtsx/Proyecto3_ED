@@ -742,19 +742,7 @@ public class MapsDrawer {
 						"          } else {\n" + 
 						"            window.alert('No Se Pudo Desplegar la direccion por: ' + status);\n" + 
 						"          }\n" + 
-						"        });"
-						+ "var markerVertex1 = new google.maps.Marker({\n" + 
-						"          position: arregloDirecciones[0],\n" + 
-						"          map: map,\n" + 
-						"          title: 'Vertice Inicial',\n"
-						+ "		   label: 'INI'" + 
-						"        });\n"
-						+ "var markerVertex2 = new google.maps.Marker({\n" + 
-						"          position: arregloDirecciones[arregloDirecciones.length -1],\n" + 
-						"          map: map,\n" + 
-						"          title: 'Vertice Final',\n"
-						+ "			label:'FIN'" + 
-						"        });\n";
+						"        });";
 			}else {
 				scriptTag += "var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';\n" + 
 						"        var marcadorCalle1 = new google.maps.Marker({\n" + 
@@ -860,19 +848,7 @@ public class MapsDrawer {
 						"          } else {\n" + 
 						"            window.alert('No Se Pudo Desplegar la direccion por: ' + status);\n" + 
 						"          }\n" + 
-						"        });"
-						+ "var markerVertex11 = new google.maps.Marker({\n" + 
-						"          position: arregloDirecciones1[arregloDirecciones1.length -1],\n" + 
-						"          map: map,\n" + 
-						"          title: 'Vertice Inicial',\n"
-						+ "		   label: 'INI'" + 
-						"        });\n"
-						+ "var markerVertex21 = new google.maps.Marker({\n" + 
-						"          position: arregloDirecciones1[0],\n" + 
-						"          map: map,\n" + 
-						"          title: 'Vertice Final',\n"
-						+ "			label:'FIN'" + 
-						"        });\n";
+						"        });";
 			}else {
 				scriptTag += "var image1 = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';\n" + 
 						"        var marcadorCalle1 = new google.maps.Marker({\n" + 

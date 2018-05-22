@@ -393,17 +393,17 @@ public class TaxiTripsManagerView
 					if(enviarDistance !=null) {
 						listaR6.remove(0);
 						listaR6.add(enviarDistance);	
-						System.out.println(listaR6.get(0));
+						listaR6.get(0).listing();
 					}
 					listaR6.add(new List());
 					if(enviarTime !=null) {
 						listaR6.remove(1);
 						listaR6.add(enviarTime);
 						listaR6.get(1).listing();
-						System.out.println(listaR6.get(1).getCurrent().getIniVertex());
+						
 					}
 						
-					System.out.println(listaR6.get(0));
+					
 					dibujo.dibujoRequerimiento6(listaR6, callesIniR6, callesFinR6);
 					break;	
 				case 10:

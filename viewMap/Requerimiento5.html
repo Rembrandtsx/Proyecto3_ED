@@ -37,7 +37,7 @@
       En este mapa puede visualizar:
         <ul>
           <li>El camino mas corto entre 2 ida y vuelta puntos generados aleatoreamente del archivo Streets.csv </li>
-<li>Los puntos Aleatoreamente generados del Streets.csv fueron:</li><ul><li>INICIO</li> <ul><li>lat:41.68775428736488</li><li>lng:-87.71172957885108</li> </ul><li>FIN:</li><ul><li>lat:41.92242136938547</li><li>lng:-87.80620514855372</li></ul></ul> 
+<li>Los puntos Aleatoreamente generados del Streets.csv fueron:</li><ul><li>INICIO</li> <ul><li>lat:41.7026806103456</li><li>lng:-87.52452737282296</li> </ul><li>FIN:</li><ul><li>lat:41.975383917565864</li><li>lng:-87.8193691721572</li></ul></ul> 
         </ul>
 
       </div>
@@ -133,40 +133,21 @@
           ]
         });
 
-        var arregloDirecciones =[ {lat:41.694878966,lng: -87.713192497},{lat:41.79259236,lng: -87.769615453},{lat:41.79259236,lng: -87.769615453},{lat:41.944226601,lng: -87.655998182},{lat:41.944226601,lng: -87.655998182},{lat:41.899602111,lng: -87.633308037},{lat:41.899602111,lng: -87.633308037},{lat:41.901206994,lng: -87.676355989},{lat:41.901206994,lng: -87.676355989},{lat:41.92276062,lng: -87.699155343},{lat:41.92276062,lng: -87.699155343},{lat:41.927260956,lng: -87.765501609},{lat:41.927260956,lng: -87.765501609},{lat:41.929297368,lng: -87.798032181}];
-var color = '#'+Math.floor(Math.random()*16777215).toString(16);
-var flightPath = new google.maps.Polyline({
-          path: arregloDirecciones,
-          geodesic: true,
-          strokeColor: color,
-          strokeOpacity: 1.0,
-          strokeWeight: 2,
-		   map:map        });
-arregloDirecciones.forEach((e)=>{var cityCircle = new google.maps.Circle({
-            strokeColor: color,
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: color,
-            fillOpacity: 0.35,
-            map: map,
-            center: e,
-            radius: 100
-          });});
-var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
         var marcadorCalle1 = new google.maps.Marker({
-          position: {lat: 41.68775428736488, lng: -87.71172957885108},
+          position: {lat: 41.7026806103456, lng: -87.52452737282296},
           map: map,
           icon: image,
 			label:'INI'
         });
 var marcadorCalle2 = new google.maps.Marker({
-          position: {lat: 41.92242136938547, lng: -87.80620514855372},
+          position: {lat: 41.975383917565864, lng: -87.8193691721572},
           map: map,
           icon: image,
 			label: 'FIN'
         });
 var color2= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCalles = new google.maps.Polyline({
-          path: [{lat: 41.68775428736488, lng: -87.71172957885108},{lat: 41.92242136938547, lng: -87.80620514855372}],
+          path: [{lat: 41.7026806103456, lng: -87.52452737282296},{lat: 41.975383917565864, lng: -87.8193691721572}],
           geodesic: true,
           strokeColor: color2,
           strokeOpacity: 1.0,
@@ -175,8 +156,8 @@ var color2= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCal
 var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 directionsDisplay.setMap(map);
 directionsService.route({
-          origin: {lat:41.68775428736488,lng:-87.71172957885108},
-          destination: {lat:41.92242136938547,lng:-87.80620514855372},
+          origin: {lat:41.7026806103456,lng:-87.52452737282296},
+          destination: {lat:41.975383917565864,lng:-87.8193691721572},
           travelMode: 'DRIVING'
         }, function(response, status) {
           if (status === 'OK') {
@@ -184,17 +165,7 @@ directionsService.route({
           } else {
             window.alert('No Se Pudo Desplegar la direccion por: ' + status);
           }
-        });var markerVertex1 = new google.maps.Marker({
-          position: arregloDirecciones[0],
-          map: map,
-          title: 'Vertice Inicial',
-		   label: 'INI'        });
-var markerVertex2 = new google.maps.Marker({
-          position: arregloDirecciones[arregloDirecciones.length -1],
-          map: map,
-          title: 'Vertice Final',
-			label:'FIN'        });
-var arregloDirecciones1 =[ {lat:41.929297368,lng: -87.798032181},{lat:41.890608853,lng: -87.756046711},{lat:41.890608853,lng: -87.756046711},{lat:41.927260956,lng: -87.765501609},{lat:41.927260956,lng: -87.765501609},{lat:41.954027649,lng: -87.763399032},{lat:41.954027649,lng: -87.763399032},{lat:41.953582125,lng: -87.72345239},{lat:41.953582125,lng: -87.72345239},{lat:41.92276062,lng: -87.699155343},{lat:41.92276062,lng: -87.699155343},{lat:41.901206994,lng: -87.676355989},{lat:41.901206994,lng: -87.676355989},{lat:41.899602111,lng: -87.633308037},{lat:41.899602111,lng: -87.633308037},{lat:41.79259236,lng: -87.769615453},{lat:41.79259236,lng: -87.769615453},{lat:41.694878966,lng: -87.713192497}];
+        });var arregloDirecciones1 =[ {lat:41.985015101,lng: -87.804532006},{lat:41.980264315,lng: -87.913624596},{lat:41.980264315,lng: -87.913624596},{lat:41.901206994,lng: -87.676355989},{lat:41.901206994,lng: -87.676355989},{lat:41.899602111,lng: -87.633308037},{lat:41.899602111,lng: -87.633308037},{lat:41.878865584,lng: -87.625192142},{lat:41.878865584,lng: -87.625192142},{lat:41.707311449,lng: -87.534902901}];
 var color1 = '#'+Math.floor(Math.random()*16777215).toString(16);
 var flightPath1 = new google.maps.Polyline({
           path: arregloDirecciones1,
@@ -215,19 +186,19 @@ arregloDirecciones1.forEach((e)=>{var cityCircle1 = new google.maps.Circle({
           });});
 var image1 = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
         var marcadorCalle1 = new google.maps.Marker({
-          position: {lat: 41.68775428736488, lng: -87.71172957885108},
+          position: {lat: 41.7026806103456, lng: -87.52452737282296},
           map: map,
           icon: image1,
 			label:'INI'
         });
 var marcadorCalle21 = new google.maps.Marker({
-          position: {lat: 41.92242136938547, lng: -87.80620514855372},
+          position: {lat: 41.975383917565864, lng: -87.8193691721572},
           map: map,
           icon: image1,
 			label: 'FIN'
         });
 var color21= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCalles1 = new google.maps.Polyline({
-          path: [{lat: 41.68775428736488, lng: -87.71172957885108},{lat: 41.92242136938547, lng: -87.80620514855372}],
+          path: [{lat: 41.7026806103456, lng: -87.52452737282296},{lat: 41.975383917565864, lng: -87.8193691721572}],
           geodesic: true,
           strokeColor: color21,
           strokeOpacity: 1.0,
@@ -236,8 +207,8 @@ var color21= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCa
 var directionsDisplay1 = new google.maps.DirectionsRenderer({suppressMarkers: true});
 directionsDisplay1.setMap(map);
 directionsService1.route({
-          origin: {lat:41.92242136938547,lng:-87.80620514855372},
-          destination: {lat:41.68775428736488,lng:-87.71172957885108},
+          origin: {lat:41.975383917565864,lng:-87.8193691721572},
+          destination: {lat:41.7026806103456,lng:-87.52452737282296},
           travelMode: 'DRIVING'
         }, function(response, status) {
           if (status === 'OK') {

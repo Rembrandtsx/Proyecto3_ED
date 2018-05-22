@@ -36,7 +36,8 @@
       <div class="alert alert-secondary" role="alert">
       En este mapa puede visualizar:
         <ul>
-          <li>Debido a que no se encontraron caminos entre el grafo entre los puntos dados se imprime la ruta optima generada por google maps.</li>
+          <li>El camino mas corto entre 2 puntos generados aleatoreamente del archivo Streets.csv </li>
+<li>Los puntos Aleatoreamente generados del Streets.csv fueron:</li><ul><li>INICIO</li> <ul><li>lat:41.68715665844147</li><li>lng:-87.60078376633285</li> </ul><li>FIN:</li><ul><li>lat:41.74573840980402</li><li>lng:-87.59413698047312</li></ul></ul> 
         </ul>
 
       </div>
@@ -132,21 +133,40 @@
           ]
         });
 
-        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var arregloDirecciones =[ {lat:41.706125752,lng: -87.598255838},{lat:41.899602111,lng: -87.633308037},{lat:41.899602111,lng: -87.633308037},{lat:41.777196255,lng: -87.642497527},{lat:41.777196255,lng: -87.642497527},{lat:41.706587882,lng: -87.623366512},{lat:41.706587882,lng: -87.623366512},{lat:41.763246799,lng: -87.616134111},{lat:41.763246799,lng: -87.616134111},{lat:41.794090253,lng: -87.592310855},{lat:41.794090253,lng: -87.592310855},{lat:41.744199535,lng: -87.586348318}];
+var color = '#'+Math.floor(Math.random()*16777215).toString(16);
+var flightPath = new google.maps.Polyline({
+          path: arregloDirecciones,
+          geodesic: true,
+          strokeColor: color,
+          strokeOpacity: 1.0,
+          strokeWeight: 2,
+		   map:map        });
+arregloDirecciones.forEach((e)=>{var cityCircle = new google.maps.Circle({
+            strokeColor: color,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: color,
+            fillOpacity: 0.35,
+            map: map,
+            center: e,
+            radius: 100
+          });});
+var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
         var marcadorCalle1 = new google.maps.Marker({
-          position: {lat: 41.940561828025906, lng: -87.63809504780197},
+          position: {lat: 41.68715665844147, lng: -87.60078376633285},
           map: map,
           icon: image,
 			label:'INI'
         });
 var marcadorCalle2 = new google.maps.Marker({
-          position: {lat: 42.005087178214225, lng: -87.76698249778593},
+          position: {lat: 41.74573840980402, lng: -87.59413698047312},
           map: map,
           icon: image,
 			label: 'FIN'
         });
 var color2= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCalles = new google.maps.Polyline({
-          path: [{lat: 41.940561828025906, lng: -87.63809504780197},{lat: 42.005087178214225, lng: -87.76698249778593}],
+          path: [{lat: 41.68715665844147, lng: -87.60078376633285},{lat: 41.74573840980402, lng: -87.59413698047312}],
           geodesic: true,
           strokeColor: color2,
           strokeOpacity: 1.0,
@@ -155,8 +175,8 @@ var color2= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCal
 var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 directionsDisplay.setMap(map);
 directionsService.route({
-          origin: {lat:41.940561828025906,lng:-87.63809504780197},
-          destination: {lat:42.005087178214225,lng:-87.76698249778593},
+          origin: {lat:41.68715665844147,lng:-87.60078376633285},
+          destination: {lat:41.74573840980402,lng:-87.59413698047312},
           travelMode: 'DRIVING'
         }, function(response, status) {
           if (status === 'OK') {
@@ -164,7 +184,17 @@ directionsService.route({
           } else {
             window.alert('No Se Pudo Desplegar la direccion por: ' + status);
           }
-        });
+        });var markerVertex1 = new google.maps.Marker({
+          position: arregloDirecciones[0],
+          map: map,
+          title: 'Vertice Inicial',
+		   label: 'INI'        });
+var markerVertex2 = new google.maps.Marker({
+          position: arregloDirecciones[arregloDirecciones.length -1],
+          map: map,
+          title: 'Vertice Final',
+			label:'FIN'        });
+
       }
 
 
