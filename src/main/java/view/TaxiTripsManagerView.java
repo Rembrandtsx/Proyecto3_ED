@@ -237,10 +237,10 @@ public class TaxiTripsManagerView
 							System.out.println("-----------------------------------");
 
 
-							dibujo.dibujoRequerimiento4(lista, callesIni, callesFin);
+							
 
 						}
-
+						dibujo.dibujoRequerimiento4(lista, callesIni, callesFin);
 					
 					break;	
 				case 8:

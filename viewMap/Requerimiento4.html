@@ -36,9 +36,7 @@
       <div class="alert alert-secondary" role="alert">
       En este mapa puede visualizar:
         <ul>
-          <li>El camino mas corto entre 2 puntos generados aleatoreamente del archivo Streets.csv </li>
-<li>Los puntos Aleatoreamente generados del Streets.csv fueron:</li><ul><li>INICIO</li> <ul><li>lat:-87.80156402559406</li><li>lng:41.94354084029795</li> </ul><li>FIN:</li><ul><li>lat:-87.63438160680828</li><li>lng:41.901324595980185</li></ul></ul> <li>Los vertices aproximados a los puntos aleatorios del Streets.csv son:</li>
-
+          <li>Debido a que no se encontraron caminos entre el grafo entre los puntos dados se imprime la ruta optima generada por google maps.</li>
         </ul>
 
       </div>
@@ -134,7 +132,39 @@
           ]
         });
 
-        
+        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var marcadorCalle1 = new google.maps.Marker({
+          position: {lat: 41.94462344034337, lng: -87.72206780416363},
+          map: map,
+          icon: image,
+			label:'INI'
+        });
+var marcadorCalle2 = new google.maps.Marker({
+          position: {lat: 41.81541199841959, lng: -87.7067122683978},
+          map: map,
+          icon: image,
+			label: 'FIN'
+        });
+var color2= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCalles = new google.maps.Polyline({
+          path: [{lat: 41.94462344034337, lng: -87.72206780416363},{lat: 41.81541199841959, lng: -87.7067122683978}],
+          geodesic: true,
+          strokeColor: color2,
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });var directionsService = new google.maps.DirectionsService;
+var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+directionsDisplay.setMap(map);
+directionsService.route({
+          origin: {lat:41.94462344034337,lng:-87.72206780416363},
+          destination: {lat:41.81541199841959,lng:-87.7067122683978},
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('No Se Pudo Desplegar la direccion por: ' + status);
+          }
+        });
       }
 
 
