@@ -6,12 +6,9 @@ import java.io.IOException;
 import java.util.Iterator;
 
 
+import model.data_structures.*;
 import org.apache.commons.io.FileUtils;
 
-import model.data_structures.IArrayList;
-import model.data_structures.IHashMap;
-import model.data_structures.LinkedList;
-import model.data_structures.List;
 import model.vo.ArcServices;
 
 public class MapsDrawer {
@@ -379,7 +376,7 @@ public class MapsDrawer {
 		}
 		
 	}
-	public void dibujoRequerimiento5(LinkedList<ArcServices>[] lista, String[] callesIni, String[] callesFin) {
+	public void dibujoRequerimiento5(ArrayList<LinkedList<ArcServices>> lista, String[] callesIni, String[] callesFin) {
 		System.out.println("Se Creo Mapa de Requerimiento 5");
 		
 		try {
@@ -401,14 +398,14 @@ public class MapsDrawer {
 						+ "</ul>"
 						+ "</ul> ";
 			String scriptTag = "";
-			if(!lista[0].isEmpty()) {
+			if(!lista.get(0).isEmpty()) {
 				scriptTag += "var arregloDirecciones =[ ";
-				lista[0].listing();
-				for(int i =0; i <lista[0].size(); i++) {
-					String[] valor1 = lista[0].getCurrent().getIniVertex().split("[|]");
-					String[] valor2 = lista[0].getCurrent().getEndVertex().split("[|]");
+				lista.get(0).listing();
+				for(int i =0; i <lista.get(0).size(); i++) {
+					String[] valor1 = lista.get(0).getCurrent().getIniVertex().split("[|]");
+					String[] valor2 = lista.get(0).getCurrent().getEndVertex().split("[|]");
 					scriptTag += "{lat:"+valor1[0]+",lng: "+valor1[1]+"},{lat:"+valor2[0]+",lng: "+valor2[1]+"},";	
-					lista[0].next();
+					lista.get(0).next();
 				}
 				scriptTag = scriptTag.substring(0, scriptTag.length()-1);
 				scriptTag += "];\n";
@@ -519,14 +516,14 @@ public class MapsDrawer {
 						"        });";
 				
 			}
-			if(!lista[1].isEmpty()) {
+			if(!lista.get(1).isEmpty()) {
 				scriptTag += "var arregloDirecciones1 =[ ";
-				lista[1].listing();
-				for(int i =0; i <lista[1].size(); i++) {
-					String[] valor1 = lista[1].getCurrent().getIniVertex().split("[|]");
-					String[] valor2 = lista[1].getCurrent().getEndVertex().split("[|]");
+				lista.get(1).listing();
+				for(int i =0; i <lista.get(1).size(); i++) {
+					String[] valor1 = lista.get(1).getCurrent().getIniVertex().split("[|]");
+					String[] valor2 = lista.get(1).getCurrent().getEndVertex().split("[|]");
 					scriptTag += "{lat:"+valor1[0]+",lng: "+valor1[1]+"},{lat:"+valor2[0]+",lng: "+valor2[1]+"},";	
-					lista[1].next();
+					lista.get(1).next();
 				}
 				scriptTag = scriptTag.substring(0, scriptTag.length()-1);
 				scriptTag += "];\n";

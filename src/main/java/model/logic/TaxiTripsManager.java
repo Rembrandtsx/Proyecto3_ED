@@ -392,16 +392,15 @@ public class TaxiTripsManager implements ITaxiTripsManager
 	 * @param end id of final vertex
 	 * @return An array with the shortest paths
 	 */
-	public LinkedList<ArcServices>[] getShortestPathByTime(String ini, String end){
+	public ArrayList<LinkedList<ArcServices>> getShortestPathByTime(String ini, String end){
 
-		LinkedList<ArcServices>[] arrSp = (LinkedList<ArcServices>[]) new Comparable[2];
-		arrSp[0] = new List<>();
-		arrSp[1] = new List<>();
+		ArrayList<LinkedList<ArcServices>> arrSp = new ArrayList<>(2);
+
 
 		ShortestPathServiceGraph sp0 = new ShortestPathServiceGraph(serviceGraph, ini, ShortestPathServiceGraph.TIME);
-		arrSp[0] = sp0.reconstructPath(end);
+		arrSp.add(sp0.reconstructPath(end));
 		ShortestPathServiceGraph sp1 = new ShortestPathServiceGraph(serviceGraph, end, ShortestPathServiceGraph.TIME);
-		arrSp[1] = sp1.reconstructPath(ini);
+		arrSp.add(sp1.reconstructPath(ini));
 
 		return arrSp;
 	}

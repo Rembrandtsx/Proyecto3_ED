@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Requerimiento5</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 90%;
+        margin-bottom: 2%;
+        width: 80%;
+          box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+          margin-left: 10%;
+          margin-top: 2%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #30373e;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark" style="box-shadow: 0 19px 38px rgba(0,0,0,0.30);">
+  <span class="navbar-brand mb-0 h1">Visualización de Requerimiento5</span>
+</nav>
+<div id="map"></div>
+    <div class="container">
+      <div class="alert alert-secondary" role="alert">
+      En este mapa puede visualizar:
+        <ul>
+          <li>El camino mas corto entre 2 puntos generados aleatoreamente del archivo Streets.csv </li>
+<li>Los puntos Aleatoreamente generados del Streets.csv fueron:</li><ul><li>INICIO</li> <ul><li>lat:41.78092081300176</li><li>lng:-87.69466110255003</li> </ul><li>FIN:</li><ul><li>lat:42.016836555473006</li><li>lng:-87.81634084551615</li></ul></ul> 
+        </ul>
+
+      </div>
+
+    </div>
+
+
+    <script>
+      function initMap() {
+        // Styles a map in night mode.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 41.8500300, lng: -87.6500500},
+            zoom: 12,
+          styles: [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ]
+        });
+
+        var arregloDirecciones =[ {lat:41.771848515,lng: -87.695666342},{lat:41.80901825,lng: -87.659166599},{lat:41.80901825,lng: -87.659166599},{lat:42.001571027,lng: -87.695012589},{lat:42.001571027,lng: -87.695012589},{lat:41.878865584,lng: -87.625192142},{lat:41.878865584,lng: -87.625192142},{lat:41.899602111,lng: -87.633308037},{lat:41.899602111,lng: -87.633308037},{lat:41.980264315,lng: -87.913624596},{lat:41.980264315,lng: -87.913624596},{lat:42.007612593,lng: -87.813781034}];
+var color = '#'+Math.floor(Math.random()*16777215).toString(16);
+var flightPath = new google.maps.Polyline({
+          path: arregloDirecciones,
+          geodesic: true,
+          strokeColor: color,
+          strokeOpacity: 1.0,
+          strokeWeight: 2,
+		   map:map        });
+arregloDirecciones.forEach((e)=>{var cityCircle = new google.maps.Circle({
+            strokeColor: color,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: color,
+            fillOpacity: 0.35,
+            map: map,
+            center: e,
+            radius: 100
+          });});
+var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var marcadorCalle1 = new google.maps.Marker({
+          position: {lat: 41.78092081300176, lng: -87.69466110255003},
+          map: map,
+          icon: image,
+			label:'INI'
+        });
+var marcadorCalle2 = new google.maps.Marker({
+          position: {lat: 42.016836555473006, lng: -87.81634084551615},
+          map: map,
+          icon: image,
+			label: 'FIN'
+        });
+var color2= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCalles = new google.maps.Polyline({
+          path: [{lat: 41.78092081300176, lng: -87.69466110255003},{lat: 42.016836555473006, lng: -87.81634084551615}],
+          geodesic: true,
+          strokeColor: color2,
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });var directionsService = new google.maps.DirectionsService;
+var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+directionsDisplay.setMap(map);
+directionsService.route({
+          origin: {lat:41.78092081300176,lng:-87.69466110255003},
+          destination: {lat:42.016836555473006,lng:-87.81634084551615},
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('No Se Pudo Desplegar la direccion por: ' + status);
+          }
+        });var markerVertex1 = new google.maps.Marker({
+          position: arregloDirecciones[0],
+          map: map,
+          title: 'Vertice Inicial',
+		   label: 'INI'        });
+var markerVertex2 = new google.maps.Marker({
+          position: arregloDirecciones[arregloDirecciones.length -1],
+          map: map,
+          title: 'Vertice Final',
+			label:'FIN'        });
+var arregloDirecciones1 =[ {lat:42.007612593,lng: -87.813781034},{lat:41.899602111,lng: -87.633308037},{lat:41.899602111,lng: -87.633308037},{lat:41.79259236,lng: -87.769615453},{lat:41.79259236,lng: -87.769615453},{lat:41.771848515,lng: -87.695666342}];
+var color1 = '#'+Math.floor(Math.random()*16777215).toString(16);
+var flightPath1 = new google.maps.Polyline({
+          path: arregloDirecciones1,
+          geodesic: true,
+          strokeColor: color1,
+          strokeOpacity: 1.0,
+          strokeWeight: 2,
+		   map:map        });
+arregloDirecciones1.forEach((e)=>{var cityCircle1 = new google.maps.Circle({
+            strokeColor: color1,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: color1,
+            fillOpacity: 0.35,
+            map: map,
+            center: e,
+            radius: 100
+          });});
+var image1 = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var marcadorCalle1 = new google.maps.Marker({
+          position: {lat: 41.78092081300176, lng: -87.69466110255003},
+          map: map,
+          icon: image1,
+			label:'INI'
+        });
+var marcadorCalle21 = new google.maps.Marker({
+          position: {lat: 42.016836555473006, lng: -87.81634084551615},
+          map: map,
+          icon: image1,
+			label: 'FIN'
+        });
+var color21= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCalles1 = new google.maps.Polyline({
+          path: [{lat: 41.78092081300176, lng: -87.69466110255003},{lat: 42.016836555473006, lng: -87.81634084551615}],
+          geodesic: true,
+          strokeColor: color21,
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });var directionsService1 = new google.maps.DirectionsService;
+var directionsDisplay1 = new google.maps.DirectionsRenderer({suppressMarkers: true});
+directionsDisplay1.setMap(map);
+directionsService1.route({
+          origin: {lat:42.016836555473006,lng:-87.81634084551615},
+          destination: {lat:41.78092081300176,lng:-87.69466110255003},
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('No Se Pudo Desplegar la direccion por: ' + status);
+          }
+        });var markerVertex11 = new google.maps.Marker({
+          position: arregloDirecciones1[arregloDirecciones1.length -1],
+          map: map,
+          title: 'Vertice Inicial',
+		   label: 'INI'        });
+var markerVertex21 = new google.maps.Marker({
+          position: arregloDirecciones1[0],
+          map: map,
+          title: 'Vertice Final',
+			label:'FIN'        });
+
+      }
+
+
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdr9v3td6ugJ39-tl7cTUJ_iSAX5dPi1c&callback=initMap"
+    async defer></script>
+  </body>
+</html>
