@@ -282,29 +282,34 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
 
     public void dfs(K id){
         initializeDfsOrders();
-        dfsHelper(id);
-    }
-
-    private void dfsHelper(K id){
         IHashMap<K, Boolean> marked = new SeparateChainingHashMap<>();
         initializeMarking(marked);
+        ListIterator<K> keys = new ListIterator<>(adjList.toList());
         try {
-            marked.put(id, true);
-            preorderDfs.enqueue(id);
-            LinkedList<K> adj = adjList.get(id).getAdj().toList();
-            adj.listing();
-            for (int i = 0; i < adj.size(); i++) {
-                K key = adj.getCurrent();
+            for (K key : keys) {
                 if(!marked.get(key)){
-                    dfsHelper(key);
+                    dfsHelper(key, marked);
                 }
-                adj.next();
             }
-            postorderDfs.enqueue(id);
-            reversePostorderDfs.push(id);
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void dfsHelper(K id, IHashMap<K, Boolean> marked) throws Exception{
+
+        marked.put(id, true);
+        preorderDfs.enqueue(id);
+        ListIterator<K> adj = new ListIterator<>(adjList.get(id).getAdj().toList());
+
+        for(K key: adj){
+            if(!marked.get(key)){
+                dfsHelper(key, marked);
+            }
+        }
+        postorderDfs.enqueue(id);
+        reversePostorderDfs.push(id);
+
     }
 
     public DiGraph<K, V, W> reverseGraph(){
@@ -353,18 +358,16 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
         }
     }
 
-    public void dfsStrongComponents(K id, IHashMap<K, Boolean> marked){
+    public void dfsStrongComponents(K id, IHashMap<K, Boolean> marked) throws Exception{
         try {
             marked.put(id, true);
             strongComponents.put(id, countStrongComponents);
-            LinkedList<K> adj = adjList.get(id).getAdj().toList();
-            adj.listing();
-            for (int i = 0; i < adj.size(); i++) {
-                K key = adj.getCurrent();
+            ListIterator<K> adj = new ListIterator<>(adjList.get(id).getAdj().toList());
+
+            for (K key : adj) {
                 if(!marked.get(key)){
                     dfsStrongComponents(key, marked);
                 }
-                adj.next();
             }
         } catch (Exception e) {
             e.printStackTrace();
