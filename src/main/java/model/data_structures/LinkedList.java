@@ -84,4 +84,6 @@ public interface LinkedList <T extends Comparable<T>>  extends Comparable
 	boolean hasNext();
 
 	public void deleteCurrent();
+
+	public LinkedList<T> getCopy();
 }

@@ -66,4 +66,11 @@ public class Controller
 		return manager.getShortestPathByTime(string,string2);
 	}
 
+	public static IHeap<Path> getSortedPathsWithNoTollsByDistance(String ini, String end){
+		return manager.getSortedPathsWithNoTollsByDistance(ini, end);
+	}
+	public static IHeap<Path> getSortedPathsWithNoTollsByTime(String ini, String end){
+		return manager.getSortedPathsWithNoTollsByTime(ini, end);
+	}
+
 }

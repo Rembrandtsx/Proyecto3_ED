@@ -260,6 +260,7 @@ public class List<T extends Comparable<T>>
 			n.setPrev(prev);
 			if(current == root) {
 				root = n;
+				end = n;
 			}
 			current.setPrev(n);
 			n.setNext(current);
@@ -297,6 +298,20 @@ public class List<T extends Comparable<T>>
 			current = prev;
 			size--;
 		}
+	}
+
+	@Override
+	public LinkedList<T> getCopy() {
+
+		LinkedList<T> copy = new List<>();
+		for (int i = 0; i < size; i++) {
+			try {
+				copy.add(get(i));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return copy;
 	}
 
 }

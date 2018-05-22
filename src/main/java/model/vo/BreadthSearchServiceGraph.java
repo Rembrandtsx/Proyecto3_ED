@@ -39,6 +39,7 @@ public class BreadthSearchServiceGraph {
     private String iniVertex;
 
     public BreadthSearchServiceGraph(DiGraph<String, AdjacentServices, ArcServices> graph, String iniVertex){
+        marked = new SeparateChainingHashMap<>();
         this.graph = graph;
         this.iniVertex = iniVertex;
         pathsToWithNoTolls = new MaxHeap<>();
@@ -52,7 +53,7 @@ public class BreadthSearchServiceGraph {
     }
 
     private void bfs(String s) throws Exception{
-        IQueue<String> queue = new List<>();
+        Queue<String> queue = new Queue<>();
         marked.put(s, true);
         queue.enqueue(s);
 
@@ -64,6 +65,8 @@ public class BreadthSearchServiceGraph {
                 ArcServices edge = vertex.getEdge(w);
                 int toll = (int)edge.getNumberOfTolls();
                 if (!marked.get(w) && toll == 0){
+                    marked.put(w, true);
+                    queue.enqueue(w);
                     LinkedList<ArcServices> p;
                     try {
                         p = pathsWithNoTolls.get(w);
@@ -71,17 +74,16 @@ public class BreadthSearchServiceGraph {
 
                     }catch (Exception e){
                         p = new List<>();
+                        p.add(edge);
                         pathsWithNoTolls.put(w, p);
                     }
-
-                    marked.put(w, true);
-                    queue.enqueue(w);
                 }
             }
         }
     }
 
     public IHeap<Path> reconstructPath(String end, String weightCriteria){
+
 
         IQueue<ImmutableStack<ArcServices>> queue = new List<>();
         Comparator c;
@@ -92,29 +94,33 @@ public class BreadthSearchServiceGraph {
         }
 
         try {
-            ArcServices endEdge = pathsWithNoTolls.get(end).getCurrent();
-            ImmutableStack<ArcServices> endStack = new ImmutableStack<>();
-            endStack.push(endEdge);
+            LinkedList<ArcServices> endEdge = pathsWithNoTolls.get(end);
+            ListIterator<ArcServices> lastEdges = new ListIterator<>(endEdge);
+            for (ArcServices arcService: lastEdges) {
+                ImmutableStack<ArcServices> endStack = new ImmutableStack<>();
+                endStack = endStack.push(arcService);
+                queue.enqueue(endStack);
+            }
             while (!queue.isEmpty()){
                 evaluatePath(queue, queue.dequeue(), c);
             }
         }catch (Exception e){
-            e.printStackTrace();
+            return new MaxHeap<>();
         }
         return pathsToWithNoTolls;
     }
 
     private void evaluatePath(IQueue<ImmutableStack<ArcServices>> queue, ImmutableStack<ArcServices> s, Comparator c) throws Exception{
 
-        String v = s.peek().getEndVertex();
+        String v = s.peek().getIniVertex();
         ListIterator<ArcServices> edges = new ListIterator<>(pathsWithNoTolls.get(v));
         for(ArcServices e : edges){
             String w = e.getIniVertex();
-            if(w != iniVertex){
-                s.push(e);
-                queue.enqueue(s);
+            ImmutableStack<ArcServices> temp = s.push(e);
+            if(!w.equals(iniVertex)){
+                queue.enqueue(temp);
             }else{
-                Path p = new Path(s.toList());
+                Path p = new Path(temp.toList());
                 pathsToWithNoTolls.add(p, c);
             }
         }

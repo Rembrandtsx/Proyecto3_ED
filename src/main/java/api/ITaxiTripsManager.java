@@ -2,11 +2,9 @@ package api;
 
 
 import model.data_structures.*;
-import model.vo.AdjacentServices;
-import model.vo.ArcServices;
-import model.vo.Service;
-import model.vo.Taxi;
+import model.vo.*;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
 
@@ -43,5 +41,8 @@ public interface ITaxiTripsManager
 
 	ArrayList<LinkedList<ArcServices>> getShortestPathByTime(String string, String string2);
 
+	IHeap<Path> getSortedPathsWithNoTollsByDistance(String ini, String end);
+
+	IHeap<Path> getSortedPathsWithNoTollsByTime(String ini, String end);
 
 }

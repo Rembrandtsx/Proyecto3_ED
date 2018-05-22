@@ -301,7 +301,85 @@ public class TaxiTripsManagerView
 					dibujo.dibujoRequerimiento5(listaR5, callesIniR5, callesFinR5);
 					break;
 				case 9:
-					
+					String[] callesIniR6 = Controller.getRandomStreets();
+
+					String[] callesFinR6 = Controller.getRandomStreets();
+
+					String[] verticesR6 = Controller.getRandomVertices(callesIniR6, callesFinR6);
+
+
+					// test case
+					IHeap<Path> pathsDistance = Controller.getSortedPathsWithNoTollsByDistance("41.80908443|-87.632424524", "41.795430631|-87.696435232");
+					IHeap<Path> pathsTime = Controller.getSortedPathsWithNoTollsByTime("41.80908443|-87.632424524", "41.795430631|-87.696435232");
+					if(pathsDistance.isEmpty()){
+						System.out.println("No hay caminos sin peajes");
+					}else {
+						System.out.println("Caminos Ordenados por distancia ascendentemente (Caso de Prueba) : ");
+
+						for (int i = 0; i < pathsDistance.size(); i++) {
+							System.out.println("Path " + (i + 1) + " : ");
+							Path path = pathsDistance.get(i + 1);
+							ListIterator<ArcServices> iterPathDistanceTest = new ListIterator(path.getEdges());
+
+							for (ArcServices e : iterPathDistanceTest) {
+								System.out.println("|");
+								System.out.println("V");
+								System.out.println("********************************");
+								System.out.println("Vertice Inicio:" + e.getIniVertex());
+								System.out.println("Vertice Final:" + e.getEndVertex());
+								System.out.println("********************************");
+							}
+							System.out.println("Distancia media del camino: " + path.getTotalDistance());
+
+
+						}
+
+					}
+
+					pathsDistance = Controller.getSortedPathsWithNoTollsByDistance(verticesR6[0], verticesR6[1]);
+					pathsTime = Controller.getSortedPathsWithNoTollsByTime(verticesR6[0], verticesR6[1]);
+
+					if(pathsDistance.isEmpty()){
+						System.out.println("No hay caminos sin peajes");
+					}else {
+						System.out.println("Caminos Ordenados por distancia ascendentemente: ");
+
+						for (int i = 0; i < pathsDistance.size(); i++) {
+							System.out.println("Path " + (i + 1) + " : ");
+							Path path = pathsDistance.get(i + 1);
+							ListIterator<ArcServices> iterPathDistance = new ListIterator(path.getEdges());
+							for (ArcServices e : iterPathDistance) {
+								System.out.println("|");
+								System.out.println("V");
+								System.out.println("********************************");
+								System.out.println("Vertice Inicio:"+e.getIniVertex());
+								System.out.println("Vertice Final:"+e.getEndVertex());
+								System.out.println("********************************");
+							}
+							System.out.println("Distancia media del camino: " + path.getTotalDistance());
+						}
+
+					}
+					if(pathsTime.isEmpty()){
+						System.out.println("No hay caminos sin peajes");
+					}else {
+						System.out.println("Caminos Ordenados por tiempo descendentemente");
+						for (int i = 0; i < pathsTime.size(); i++) {
+							System.out.println("Path " + (i + 1) + " : ");
+							Path path = pathsTime.get(i + 1);
+							ListIterator<ArcServices> iterPathTime = new ListIterator(path.getEdges());
+							for (ArcServices e : iterPathTime) {
+								System.out.println("|");
+								System.out.println("V");
+								System.out.println("********************************");
+								System.out.println("Vertice Inicio:"+e.getIniVertex());
+								System.out.println("Vertice Final:"+e.getEndVertex());
+								System.out.println("********************************");
+							}
+							System.out.println("Tiempo media del camino: " + path.getTotalTime());
+						}
+					}
+
 					break;	
 				case 10:
 					

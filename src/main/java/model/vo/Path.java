@@ -1,5 +1,6 @@
 package model.vo;
 
+import javafx.scene.shape.Arc;
 import model.data_structures.LinkedList;
 import model.data_structures.List;
 import model.data_structures.ListIterator;
@@ -39,18 +40,19 @@ public class Path implements Comparable<Path> {
     }
 
     public double getTotalDistance(){
-
-        ListIterator<ArcServices> path = new ListIterator<>(edges);
+        LinkedList<ArcServices> copy = edges.getCopy();
+        ListIterator<ArcServices> path = new ListIterator<>(copy);
         totalDistance = 0.0;
         for (ArcServices e: path) {
             totalDistance += e.getMeanDistance();
         }
+
         return  totalDistance;
     }
 
     public double getTotalTime(){
-
-        ListIterator<ArcServices> path = new ListIterator<>(edges);
+        LinkedList<ArcServices> copy = edges.getCopy();
+        ListIterator<ArcServices> path = new ListIterator<>(copy);
         totalTime = 0.0;
         for (ArcServices e: path) {
             totalTime += e.getMeanTimeStamp();

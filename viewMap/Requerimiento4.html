@@ -134,19 +134,19 @@
 
         var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
         var marcadorCalle1 = new google.maps.Marker({
-          position: {lat: 41.94462344034337, lng: -87.72206780416363},
+          position: {lat: 41.940561828025906, lng: -87.63809504780197},
           map: map,
           icon: image,
 			label:'INI'
         });
 var marcadorCalle2 = new google.maps.Marker({
-          position: {lat: 41.81541199841959, lng: -87.7067122683978},
+          position: {lat: 42.005087178214225, lng: -87.76698249778593},
           map: map,
           icon: image,
 			label: 'FIN'
         });
 var color2= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCalles = new google.maps.Polyline({
-          path: [{lat: 41.94462344034337, lng: -87.72206780416363},{lat: 41.81541199841959, lng: -87.7067122683978}],
+          path: [{lat: 41.940561828025906, lng: -87.63809504780197},{lat: 42.005087178214225, lng: -87.76698249778593}],
           geodesic: true,
           strokeColor: color2,
           strokeOpacity: 1.0,
@@ -155,8 +155,8 @@ var color2= '#'+Math.floor(Math.random()*16777215).toString(16);var coneccionCal
 var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 directionsDisplay.setMap(map);
 directionsService.route({
-          origin: {lat:41.94462344034337,lng:-87.72206780416363},
-          destination: {lat:41.81541199841959,lng:-87.7067122683978},
+          origin: {lat:41.940561828025906,lng:-87.63809504780197},
+          destination: {lat:42.005087178214225,lng:-87.76698249778593},
           travelMode: 'DRIVING'
         }, function(response, status) {
           if (status === 'OK') {
