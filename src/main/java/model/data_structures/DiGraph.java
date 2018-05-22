@@ -133,7 +133,7 @@ public class DiGraph <K extends Comparable<K>, V, W> implements IDiGraph<K, V, W
         return null;
     }
     
-    public Vertex getvertex(K id) {
+    public Vertex getVertex(K id) {
     	try {
             return adjList.get(id);
         } catch (Exception e) {

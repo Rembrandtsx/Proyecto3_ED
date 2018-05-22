@@ -97,17 +97,20 @@ public class TaxiTripsManagerView
 									"Number of edges: " + graph.numEdges() + "\n" +
 									"Reference distances for vertex creation (dx): " + refDistance + "\n");
 				System.out.println("----------------------------------------------------------------------");
-//				System.out.println("Information about vertices (clusters) in the graph: ");
-//				Iterator<String> iter = graph.keys();
-//				int count = 1;
-//				int countServices = 0;
-//				while (iter.hasNext()){
-//					AdjacentServices as = (AdjacentServices)graph.getInfoVertex(iter.next());
-//					System.out.println( count + ") Cluster id: " + as.getLatRef() + "-" + as.getLonRef() + " Vertex array length: " + as.getServices().size());
-//					countServices += as.getServices().size();
-//					count++;
-//				}
-//				System.out.println(countServices);
+				System.out.println("Information about vertices (clusters) in the graph: ");
+				Iterator<String> iter = graph.keys();
+				int count = 1;
+				int countServices = 0;
+				while (iter.hasNext()){
+					String id = iter.next();
+					AdjacentServices as = (AdjacentServices)graph.getInfoVertex(id);
+					System.out.println( count + ") Cluster id: " + as.getLatRef() + "-" + as.getLonRef() + " Vertex array length: " + as.getServices().size());
+					Vertex<String, AdjacentServices, ArcServices> v = graph.getVertex(id);
+					System.out.println("number of adjacent: " + v.getAdj().size());
+					countServices += as.getServices().size();
+					count++;
+				}
+				System.out.println(countServices);
 				break;
 
 				case 2:
@@ -136,6 +139,7 @@ public class TaxiTripsManagerView
 								"Number of edges: " + serviceGraph.numEdges() + "\n");
 						System.out.println("----------------------------------------------------------------------");
 					}
+
 					break;
 				case 4:
 						AdjacentServices m = Controller.mostCongestedVertex();
@@ -208,35 +212,41 @@ public class TaxiTripsManagerView
 						System.out.println(callesFin[0]+"*****"+callesFin[1]);
 						String[] vertices=Controller.getRandomVertices(callesIni, callesFin);
 						System.out.println(vertices[0]+"****"+vertices[1]);
-						while(vertices[0].equals(vertices[1])){
-							callesIni = Controller.getRandomStreets();
-							System.out.println(callesIni[0]+"*****"+callesIni[1]);
-							callesFin= Controller.getRandomStreets();
-							System.out.println(callesFin[0]+"*****"+callesFin[1]);
-							vertices =  Controller.getRandomVertices(callesIni, callesFin);
-							System.out.println(vertices[0]+"****"+vertices[1]);
-						}
+//						while(vertices[0].equals(vertices[1])){
+//							callesIni = Controller.getRandomStreets();
+//							System.out.println(callesIni[0]+"*****"+callesIni[1]);
+//							callesFin= Controller.getRandomStreets();
+//							System.out.println(callesFin[0]+"*****"+callesFin[1]);
+//							vertices =  Controller.getRandomVertices(callesIni, callesFin);
+//							System.out.println(vertices[0]+"****"+vertices[1]);
+//						}
 						
 						LinkedList<ArcServices> lista = Controller.getShortestPathByDistance(vertices[0], vertices[1]);
-						System.out.println("Camino de costo minimo: ");
-						System.out.println("-----------------------------------");
-						System.out.println("-----------EL CAMINO---------------");
-						try {
-						for(int i =0; i<lista.size();i++) {
-							System.out.println("|");
-							System.out.println("V");
-							System.out.println("********************************");
-							System.out.println("Vertice Inicio:"+lista.getCurrent().getIniVertex());
-							System.out.println("Vertice Final:"+lista.getCurrent().getEndVertex());
-							System.out.println("********************************");
-							lista.next();
-						}
-						}catch(Exception e) {e.printStackTrace();}
-						System.out.println("-----------FIN DEL CAMINO----------");
-						System.out.println("-----------------------------------");
-					
+						if(lista.isEmpty()){
+							System.out.println("No hay caminos entre los vértices");
+						}else {
+							System.out.println("Camino de costo minimo: ");
+							System.out.println("-----------------------------------");
+							System.out.println("-----------EL CAMINO---------------");
+							try {
+								lista.listing();
+								for(int i =0; i<lista.size();i++) {
+									System.out.println("|");
+									System.out.println("V");
+									System.out.println("********************************");
+									System.out.println("Vertice Inicio:"+lista.getCurrent().getIniVertex());
+									System.out.println("Vertice Final:"+lista.getCurrent().getEndVertex());
+									System.out.println("********************************");
+									lista.next();
+								}
+							}catch(Exception e) {e.printStackTrace();}
+							System.out.println("-----------FIN DEL CAMINO----------");
+							System.out.println("-----------------------------------");
 
-						dibujo.dibujoRequerimiento4(lista, callesIni, callesFin);
+
+							dibujo.dibujoRequerimiento4(lista, callesIni, callesFin);
+						}
+
 					
 					break;	
 				case 8:

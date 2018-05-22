@@ -81,4 +81,5 @@ public interface IDiGraph <K extends Comparable<K>, V, W> extends Serializable{
     
     Iterator<K> keys();
 
+    Vertex<K, V, W> getVertex(K id);
 }

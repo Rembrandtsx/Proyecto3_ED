@@ -44,13 +44,21 @@ public class ShortestPathServiceGraph {
 
     private DiGraph<String, AdjacentServices, ArcServices> graph;
 
+    private boolean[] marked;
+
     public ShortestPathServiceGraph(DiGraph<String, AdjacentServices, ArcServices> graph, String ini, String weightCriteria){
         initializeMappings(graph);
         path = new int[graph.numVertices()];
         distances = new double[graph.numVertices()];
+        marked = new boolean[graph.numVertices()];
         minHeap = new IndexMinHeap<>(graph.numVertices());
         this.weightCriteria = weightCriteria;
         this.graph = graph;
+
+        // initialize path
+        for (int i = 0; i < path.length; i++) {
+            path[i] = -1;
+        }
 
         // initialize distances:
         for (int i = 0; i < distances.length; i++) {
@@ -72,18 +80,21 @@ public class ShortestPathServiceGraph {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("Dijkstra Terminated");
 
     }
 
     private void evaluateEdges(int v) throws Exception {
+        marked[v] = true;
         String graphKey = mapToString[v];
-        Vertex<String,AdjacentServices,ArcServices> vertex = graph.getvertex(graphKey);
+        Vertex<String,AdjacentServices,ArcServices> vertex = graph.getVertex(graphKey);
         ListIterator<String> adj = new ListIterator<>(vertex.getAdj().toList());
 
         for (String k: adj) {
             int w = mapToInteger.get(k);
             double weight = getWeight(vertex, k);
-            if(distances[w] > (distances[v] + weight)){
+            if(!marked[w] && (distances[w] > (distances[v] + weight))){
+
                 distances[w] = distances[v] + weight;
                 path[w] = v;
                 if(minHeap.contains(w)){
@@ -159,14 +170,20 @@ public class ShortestPathServiceGraph {
 
     public void reconstructPath(int endVertex, int iniVertex, LinkedList<ArcServices> pathTo) throws Exception {
 
+
         int currentVertex = endVertex;
+
+
+        if(path[currentVertex] == -1){
+            return;
+        }
+
         while (currentVertex != iniVertex){
 
             String current = mapToString[currentVertex];
             String prev = mapToString[path[currentVertex]];
             ArcServices edge = graph.getInfoEdge(prev, current);
             pathTo.add(edge);
-
             currentVertex = mapToInteger.get(prev);
         }
 

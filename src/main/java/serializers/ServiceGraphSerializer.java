@@ -34,7 +34,7 @@ public class ServiceGraphSerializer {
                 String key = keys.next();
                 writer.name(key).beginObject();
                 successful = writeValue(writer, graph.getInfoVertex(key));
-                successful &= writeAdjacentVertices(writer, graph.getvertex(key));
+                successful &= writeAdjacentVertices(writer, graph.getVertex(key));
                 if(!successful){
                     return false;
                 }

@@ -58,7 +58,7 @@ public class BreadthSearchServiceGraph {
 
         while (!queue.isEmpty()){
             String v = queue.dequeue();
-            Vertex<String, AdjacentServices, ArcServices> vertex = graph.getvertex(v);
+            Vertex<String, AdjacentServices, ArcServices> vertex = graph.getVertex(v);
             ListIterator<String> adj = new ListIterator<>(vertex.getAdj().toList());
             for(String w : adj){
                 ArcServices edge = vertex.getEdge(w);
