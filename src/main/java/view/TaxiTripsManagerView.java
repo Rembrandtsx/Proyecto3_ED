@@ -384,7 +384,7 @@ public class TaxiTripsManagerView
 								System.out.println("Vertice Final:"+e.getEndVertex());
 								System.out.println("********************************");
 							}
-							System.out.println("Tiempo media del camino: " + path.getTotalTime());
+							System.out.println("Tiempo medio del camino: " + path.getTotalTime());
 						}
 					}
 					
@@ -396,9 +396,10 @@ public class TaxiTripsManagerView
 						System.out.println(listaR6.get(0));
 					}
 					listaR6.add(new List());
-					if(enviarDistance !=null) {
+					if(enviarTime !=null) {
 						listaR6.remove(1);
 						listaR6.add(enviarTime);
+						listaR6.get(1).listing();
 						System.out.println(listaR6.get(1).getCurrent().getIniVertex());
 					}
 						
