@@ -8,7 +8,7 @@ import model.data_structures.IArrayList;
 public class ArcServices implements Serializable, Comparable<ArcServices> {
 
 
-    private String iniVertex;
+    
 
     private String endVertex;
 
@@ -21,6 +21,8 @@ public class ArcServices implements Serializable, Comparable<ArcServices> {
     private double numberOfTolls;
 
     private int numberOfServices;
+
+	private String iniVertex;
 
     public ArcServices(){
 

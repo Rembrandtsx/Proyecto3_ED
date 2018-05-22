@@ -61,4 +61,9 @@ public class Controller
 		return manager.getShortestPathByDistance(ini,end);
 	}
 
+	public static LinkedList<ArcServices>[] getShortestPathByTime(String string, String string2) {
+		// TODO Auto-generated method stub
+		return manager.getShortestPathByTime(string,string2);
+	}
+
 }

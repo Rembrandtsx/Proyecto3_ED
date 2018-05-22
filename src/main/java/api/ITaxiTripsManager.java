@@ -41,5 +41,7 @@ public interface ITaxiTripsManager
 	String[] getRandomInitialAndFinalVertices(String[] callesIni, String[] callesFin);
 	LinkedList<ArcServices> getShortestPathByDistance(String ini, String end);
 
+	LinkedList<ArcServices>[] getShortestPathByTime(String string, String string2);
+
 
 }

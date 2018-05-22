@@ -244,7 +244,61 @@ public class TaxiTripsManagerView
 					
 					break;	
 				case 8:
+					String[] callesIniR5 = Controller.getRandomStreets();
 					
+					String[] callesFinR5= Controller.getRandomStreets();
+					
+					String[] verticesR5=Controller.getRandomVertices(callesIniR5, callesFinR5);
+					
+
+					
+					LinkedList<ArcServices>[] listaR5 = Controller.getShortestPathByTime(verticesR5[0], verticesR5[1]);
+					if(listaR5[0].isEmpty()){
+						System.out.println("No hay caminos entre los vértices de IDA");
+					}else {
+						System.out.println("Camino de costo minimo: ");
+						System.out.println("-----------------------------------");
+						System.out.println("-----------EL CAMINO IDA------------");
+						try {
+							listaR5[0].listing();
+							for(int i =0; i<listaR5[0].size();i++) {
+								System.out.println("|");
+								System.out.println("V");
+								System.out.println("********************************");
+								System.out.println("Vertice Inicio:"+listaR5[0].getCurrent().getIniVertex());
+								System.out.println("Vertice Final:"+listaR5[0].getCurrent().getEndVertex());
+								System.out.println("********************************");
+								listaR5[0].next();
+							}
+						}catch(Exception e) {e.printStackTrace();}
+						System.out.println("-----------FIN DEL CAMINO----------");
+						System.out.println("-----------------------------------");
+					}
+					if(listaR5[1].isEmpty()){
+						System.out.println("No hay caminos entre los vértices de REGRESO");
+					}else {
+						System.out.println("Camino de costo minimo: ");
+						System.out.println("-----------------------------------");
+						System.out.println("-----------EL CAMINO REGRESO------------");
+						try {
+							listaR5[1].listing();
+							for(int i =0; i<listaR5[1].size();i++) {
+								System.out.println("|");
+								System.out.println("V");
+								System.out.println("********************************");
+								System.out.println("Vertice Inicio:"+listaR5[1].getCurrent().getIniVertex());
+								System.out.println("Vertice Final:"+listaR5[1].getCurrent().getEndVertex());
+								System.out.println("********************************");
+								listaR5[1].next();
+							}
+						}catch(Exception e) {e.printStackTrace();}
+						System.out.println("-----------FIN DEL CAMINO----------");
+						System.out.println("-----------------------------------");
+					}
+					
+					
+					
+					dibujo.dibujoRequerimiento5(listaR5, callesIniR5, callesFinR5);
 					break;
 				case 9:
 					
