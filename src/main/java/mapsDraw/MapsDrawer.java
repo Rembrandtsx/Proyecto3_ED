@@ -648,11 +648,284 @@ public class MapsDrawer {
 			e.printStackTrace();
 		}
 		
-		
+
 		
 		
 	}
-	public void dibujoRequerimiento6() {
+	public void dibujoRequerimiento6(ArrayList<LinkedList<ArcServices>> lista, String[] callesIni,
+			String[] callesFin) {
+			System.out.println("Se Creo Mapa de Requerimiento 6");
+		
+		try {
+			reqMade[5]=true;
+			
+			File htmlTemplateFile = new File("viewMap/templates/templateMap.html");
+			String htmlString;
+			htmlString = FileUtils.readFileToString(htmlTemplateFile);
+			String requerimiento = "Requerimiento6";
+			String listaElemento = "<li>El camino mas corto entre 2 ida y vuelta puntos generados aleatoreamente del archivo Streets.csv </li>\n"
+					+ "<li>Los puntos Aleatoreamente generados del Streets.csv fueron:</li><ul>"
+						+ "<li>INICIO</li> <ul>"
+						+ "<li>lat:"+callesIni[0]+"</li>"
+						+ "<li>lng:"+callesIni[1]+"</li> "
+						+ "</ul>"
+						+ "<li>FIN:</li><ul>"
+						+ "<li>lat:"+callesFin[0]+"</li>"
+						+ "<li>lng:"+callesFin[1]+"</li>"
+						+ "</ul>"
+						+ "</ul> ";
+			String scriptTag = "";
+			if(!lista.get(0).isEmpty()) {
+				scriptTag += "var arregloDirecciones =[ ";
+				lista.get(0).listing();
+				for(int i =0; i <lista.get(0).size(); i++) {
+					String[] valor1 = lista.get(0).getCurrent().getIniVertex().split("[|]");
+					String[] valor2 = lista.get(0).getCurrent().getEndVertex().split("[|]");
+					scriptTag += "{lat:"+valor1[0]+",lng: "+valor1[1]+"},{lat:"+valor2[0]+",lng: "+valor2[1]+"},";	
+					lista.get(0).next();
+				}
+				scriptTag = scriptTag.substring(0, scriptTag.length()-1);
+				scriptTag += "];\n";
+				scriptTag += "var color = '#'+Math.floor(Math.random()*16777215).toString(16);\n";
+				scriptTag += "var flightPath = new google.maps.Polyline({\n" + 
+						"          path: arregloDirecciones,\n" + 
+						"          geodesic: true,\n" + 
+						"          strokeColor: color,\n" + 
+						"          strokeOpacity: 1.0,\n" + 
+						"          strokeWeight: 2,\n"+ 
+						"		   map:map" + 
+						"        });\n"
+						+ "arregloDirecciones.forEach((e)=>{"
+						+ "var cityCircle = new google.maps.Circle({\n" + 
+						"            strokeColor: color,\n" + 
+						"            strokeOpacity: 0.8,\n" + 
+						"            strokeWeight: 2,\n" + 
+						"            fillColor: color,\n" + 
+						"            fillOpacity: 0.35,\n" + 
+						"            map: map,\n" + 
+						"            center: e,\n" + 
+						"            radius: 100\n" + 
+						"          });"
+						+ ""
+						+ "});\n"
+						+ "var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';\n" + 
+						"        var marcadorCalle1 = new google.maps.Marker({\n" + 
+						"          position: {lat: "+callesIni[0]+", lng: "+callesIni[1]+"},\n" + 
+						"          map: map,\n" + 
+						"          icon: image,\n"
+						+ "			label:'INI'\n" + 
+						"        });\n"
+						+ "var marcadorCalle2 = new google.maps.Marker({\n" + 
+						"          position: {lat: "+callesFin[0]+", lng: "+callesFin[1]+"},\n" + 
+						"          map: map,\n" + 
+						"          icon: image,\n"
+						+ "			label: 'FIN'\n" + 
+						"        });\n"
+						+ "var color2= '#'+Math.floor(Math.random()*16777215).toString(16);"
+						+ "var coneccionCalles = new google.maps.Polyline({\n" + 
+						"          path: [{lat: "+callesIni[0]+", lng: "+callesIni[1]+"},{lat: "+callesFin[0]+", lng: "+callesFin[1]+"}],\n" + 
+						"          geodesic: true,\n" + 
+						"          strokeColor: color2,\n" + 
+						"          strokeOpacity: 1.0,\n" + 
+						"          strokeWeight: 2\n" + 
+						"        });"
+						+ "var directionsService = new google.maps.DirectionsService;\n"
+						+ "var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});\n"
+						+ "directionsDisplay.setMap(map);\n"
+						+ "directionsService.route({\n" + 
+						"          origin: {lat:"+callesIni[0]+",lng:"+callesIni[1]+"},\n" + 
+						"          destination: {lat:"+callesFin[0]+",lng:"+callesFin[1]+"},\n" + 
+						"          travelMode: 'DRIVING'\n" + 
+						"        }, function(response, status) {\n" + 
+						"          if (status === 'OK') {\n" + 
+						"            directionsDisplay.setDirections(response);\n" + 
+						"          } else {\n" + 
+						"            window.alert('No Se Pudo Desplegar la direccion por: ' + status);\n" + 
+						"          }\n" + 
+						"        });"
+						+ "var markerVertex1 = new google.maps.Marker({\n" + 
+						"          position: arregloDirecciones[0],\n" + 
+						"          map: map,\n" + 
+						"          title: 'Vertice Inicial',\n"
+						+ "		   label: 'INI'" + 
+						"        });\n"
+						+ "var markerVertex2 = new google.maps.Marker({\n" + 
+						"          position: arregloDirecciones[arregloDirecciones.length -1],\n" + 
+						"          map: map,\n" + 
+						"          title: 'Vertice Final',\n"
+						+ "			label:'FIN'" + 
+						"        });\n";
+			}else {
+				scriptTag += "var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';\n" + 
+						"        var marcadorCalle1 = new google.maps.Marker({\n" + 
+						"          position: {lat: "+callesIni[0]+", lng: "+callesIni[1]+"},\n" + 
+						"          map: map,\n" + 
+						"          icon: image,\n"
+						+ "			label:'INI'\n" + 
+						"        });\n"
+						+ "var marcadorCalle2 = new google.maps.Marker({\n" + 
+						"          position: {lat: "+callesFin[0]+", lng: "+callesFin[1]+"},\n" + 
+						"          map: map,\n" + 
+						"          icon: image,\n"
+						+ "			label: 'FIN'\n" + 
+						"        });\n"
+						+ "var color2= '#'+Math.floor(Math.random()*16777215).toString(16);"
+						+ "var coneccionCalles = new google.maps.Polyline({\n" + 
+						"          path: [{lat: "+callesIni[0]+", lng: "+callesIni[1]+"},{lat: "+callesFin[0]+", lng: "+callesFin[1]+"}],\n" + 
+						"          geodesic: true,\n" + 
+						"          strokeColor: color2,\n" + 
+						"          strokeOpacity: 1.0,\n" + 
+						"          strokeWeight: 2\n" + 
+						"        });"
+						+ "var directionsService = new google.maps.DirectionsService;\n"
+						+ "var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});\n"
+						+ "directionsDisplay.setMap(map);\n"
+						+ "directionsService.route({\n" + 
+						"          origin: {lat:"+callesIni[0]+",lng:"+callesIni[1]+"},\n" + 
+						"          destination: {lat:"+callesFin[0]+",lng:"+callesFin[1]+"},\n" + 
+						"          travelMode: 'DRIVING'\n" + 
+						"        }, function(response, status) {\n" + 
+						"          if (status === 'OK') {\n" + 
+						"            directionsDisplay.setDirections(response);\n" + 
+						"          } else {\n" + 
+						"            window.alert('No Se Pudo Desplegar la direccion por: ' + status);\n" + 
+						"          }\n" + 
+						"        });";
+				
+			}
+			if(!lista.get(1).isEmpty()) {
+				scriptTag += "var arregloDirecciones1 =[ ";
+				lista.get(1).listing();
+				for(int i =0; i <lista.get(1).size(); i++) {
+					String[] valor1 = lista.get(1).getCurrent().getIniVertex().split("[|]");
+					String[] valor2 = lista.get(1).getCurrent().getEndVertex().split("[|]");
+					scriptTag += "{lat:"+valor1[0]+",lng: "+valor1[1]+"},{lat:"+valor2[0]+",lng: "+valor2[1]+"},";	
+					lista.get(1).next();
+				}
+				scriptTag = scriptTag.substring(0, scriptTag.length()-1);
+				scriptTag += "];\n";
+				scriptTag += "var color1 = '#'+Math.floor(Math.random()*16777215).toString(16);\n";
+				scriptTag += "var flightPath1 = new google.maps.Polyline({\n" + 
+						"          path: arregloDirecciones1,\n" + 
+						"          geodesic: true,\n" + 
+						"          strokeColor: color1,\n" + 
+						"          strokeOpacity: 1.0,\n" + 
+						"          strokeWeight: 2,\n"+ 
+						"		   map:map" + 
+						"        });\n"
+						+ "arregloDirecciones1.forEach((e)=>{"
+						+ "var cityCircle1 = new google.maps.Circle({\n" + 
+						"            strokeColor: color1,\n" + 
+						"            strokeOpacity: 0.8,\n" + 
+						"            strokeWeight: 2,\n" + 
+						"            fillColor: color1,\n" + 
+						"            fillOpacity: 0.35,\n" + 
+						"            map: map,\n" + 
+						"            center: e,\n" + 
+						"            radius: 100\n" + 
+						"          });"
+						+ ""
+						+ "});\n"
+						+ "var image1 = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';\n" + 
+						"        var marcadorCalle1 = new google.maps.Marker({\n" + 
+						"          position: {lat: "+callesIni[0]+", lng: "+callesIni[1]+"},\n" + 
+						"          map: map,\n" + 
+						"          icon: image1,\n"
+						+ "			label:'INI'\n" + 
+						"        });\n"
+						+ "var marcadorCalle21 = new google.maps.Marker({\n" + 
+						"          position: {lat: "+callesFin[0]+", lng: "+callesFin[1]+"},\n" + 
+						"          map: map,\n" + 
+						"          icon: image1,\n"
+						+ "			label: 'FIN'\n" + 
+						"        });\n"
+						+ "var color21= '#'+Math.floor(Math.random()*16777215).toString(16);"
+						+ "var coneccionCalles1 = new google.maps.Polyline({\n" + 
+						"          path: [{lat: "+callesIni[0]+", lng: "+callesIni[1]+"},{lat: "+callesFin[0]+", lng: "+callesFin[1]+"}],\n" + 
+						"          geodesic: true,\n" + 
+						"          strokeColor: color21,\n" + 
+						"          strokeOpacity: 1.0,\n" + 
+						"          strokeWeight: 2\n" + 
+						"        });"
+						+ "var directionsService1 = new google.maps.DirectionsService;\n"
+						+ "var directionsDisplay1 = new google.maps.DirectionsRenderer({suppressMarkers: true});\n"
+						+ "directionsDisplay1.setMap(map);\n"
+						+ "directionsService1.route({\n" + 
+						"          origin: {lat:"+callesFin[0]+",lng:"+callesFin[1]+"},\n" + 
+						"          destination: {lat:"+callesIni[0]+",lng:"+callesIni[1]+"},\n" + 
+						"          travelMode: 'DRIVING'\n" + 
+						"        }, function(response, status) {\n" + 
+						"          if (status === 'OK') {\n" + 
+						"            directionsDisplay.setDirections(response);\n" + 
+						"          } else {\n" + 
+						"            window.alert('No Se Pudo Desplegar la direccion por: ' + status);\n" + 
+						"          }\n" + 
+						"        });"
+						+ "var markerVertex11 = new google.maps.Marker({\n" + 
+						"          position: arregloDirecciones1[arregloDirecciones1.length -1],\n" + 
+						"          map: map,\n" + 
+						"          title: 'Vertice Inicial',\n"
+						+ "		   label: 'INI'" + 
+						"        });\n"
+						+ "var markerVertex21 = new google.maps.Marker({\n" + 
+						"          position: arregloDirecciones1[0],\n" + 
+						"          map: map,\n" + 
+						"          title: 'Vertice Final',\n"
+						+ "			label:'FIN'" + 
+						"        });\n";
+			}else {
+				scriptTag += "var image1 = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';\n" + 
+						"        var marcadorCalle1 = new google.maps.Marker({\n" + 
+						"          position: {lat: "+callesIni[0]+", lng: "+callesIni[1]+"},\n" + 
+						"          map: map,\n" + 
+						"          icon: image,\n"
+						+ "			label:'FIN'\n" + 
+						"        });\n"
+						+ "var marcadorCalle21 = new google.maps.Marker({\n" + 
+						"          position: {lat: "+callesFin[0]+", lng: "+callesFin[1]+"},\n" + 
+						"          map: map,\n" + 
+						"          icon: image,\n"
+						+ "			label: 'INI'\n" + 
+						"        });\n"
+						+ "var color21= '#'+Math.floor(Math.random()*16777215).toString(16);"
+						+ "var coneccionCalles1 = new google.maps.Polyline({\n" + 
+						"          path: [{lat: "+callesIni[0]+", lng: "+callesIni[1]+"},{lat: "+callesFin[0]+", lng: "+callesFin[1]+"}],\n" + 
+						"          geodesic: true,\n" + 
+						"          strokeColor: color2,\n" + 
+						"          strokeOpacity: 1.0,\n" + 
+						"          strokeWeight: 2\n" + 
+						"        });"
+						+ "var directionsService1 = new google.maps.DirectionsService;\n"
+						+ "var directionsDisplay1 = new google.maps.DirectionsRenderer({suppressMarkers: true});\n"
+						+ "directionsDisplay1.setMap(map);\n"
+						+ "directionsService1.route({\n" + 
+						"          origin: {lat:"+callesFin[0]+",lng:"+callesFin[1]+"},\n" + 
+						"          destination: {lat:"+callesIni[0]+",lng:"+callesIni[1]+"},\n" + 
+						"          travelMode: 'DRIVING'\n" + 
+						"        }, function(response, status) {\n" + 
+						"          if (status === 'OK') {\n" + 
+						"            directionsDisplay.setDirections(response);\n" + 
+						"          } else {\n" + 
+						"            window.alert('No Se Pudo Desplegar la direccion por: ' + status);\n" + 
+						"          }\n" + 
+						"        });";
+				
+			}
+		
+			
+			
+			htmlString = htmlString.replace("$Requerimiento", requerimiento);
+			htmlString = htmlString.replace("<!--$ListaElemento-->", listaElemento);
+			htmlString = htmlString.replace("//$VARIABLESCRIPT", scriptTag);
+			File newHtmlFile = new File("viewMap/"+requerimiento+".html");
+			FileUtils.writeStringToFile(newHtmlFile, htmlString);		
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
 		
 	}
 	
@@ -698,6 +971,8 @@ public class MapsDrawer {
 		
 		
 	}
+
+
 	
 	
 	

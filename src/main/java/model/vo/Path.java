@@ -1,6 +1,5 @@
 package model.vo;
 
-import javafx.scene.shape.Arc;
 import model.data_structures.LinkedList;
 import model.data_structures.List;
 import model.data_structures.ListIterator;

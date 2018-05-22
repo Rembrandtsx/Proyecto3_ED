@@ -335,20 +335,25 @@ public class TaxiTripsManagerView
 						}
 
 					}
-
+						///CIERRE CASO DE PRUEBA
 					pathsDistance = Controller.getSortedPathsWithNoTollsByDistance(verticesR6[0], verticesR6[1]);
 					pathsTime = Controller.getSortedPathsWithNoTollsByTime(verticesR6[0], verticesR6[1]);
-
+					LinkedList<ArcServices> enviarDistance = null;
+					LinkedList<ArcServices> enviarTime = null;
 					if(pathsDistance.isEmpty()){
 						System.out.println("No hay caminos sin peajes");
 					}else {
 						System.out.println("Caminos Ordenados por distancia ascendentemente: ");
-
+						//A REVISAR #####################################
+						enviarDistance = pathsDistance.get(1).getEdges();
 						for (int i = 0; i < pathsDistance.size(); i++) {
+
 							System.out.println("Path " + (i + 1) + " : ");
 							Path path = pathsDistance.get(i + 1);
 							ListIterator<ArcServices> iterPathDistance = new ListIterator(path.getEdges());
+					
 							for (ArcServices e : iterPathDistance) {
+
 								System.out.println("|");
 								System.out.println("V");
 								System.out.println("********************************");
@@ -364,10 +369,13 @@ public class TaxiTripsManagerView
 						System.out.println("No hay caminos sin peajes");
 					}else {
 						System.out.println("Caminos Ordenados por tiempo descendentemente");
+						//A REVISAR #####################################
+						enviarTime = pathsTime.get(1).getEdges();
 						for (int i = 0; i < pathsTime.size(); i++) {
 							System.out.println("Path " + (i + 1) + " : ");
 							Path path = pathsTime.get(i + 1);
 							ListIterator<ArcServices> iterPathTime = new ListIterator(path.getEdges());
+						
 							for (ArcServices e : iterPathTime) {
 								System.out.println("|");
 								System.out.println("V");
@@ -379,7 +387,23 @@ public class TaxiTripsManagerView
 							System.out.println("Tiempo media del camino: " + path.getTotalTime());
 						}
 					}
-
+					
+					ArrayList<LinkedList<ArcServices>> listaR6 = new ArrayList<>(2);
+					listaR6.add(new List());
+					if(enviarDistance !=null) {
+						listaR6.remove(0);
+						listaR6.add(enviarDistance);	
+						System.out.println(listaR6.get(0));
+					}
+					listaR6.add(new List());
+					if(enviarDistance !=null) {
+						listaR6.remove(1);
+						listaR6.add(enviarTime);
+						System.out.println(listaR6.get(1).getCurrent().getIniVertex());
+					}
+						
+					System.out.println(listaR6.get(0));
+					dibujo.dibujoRequerimiento6(listaR6, callesIniR6, callesFinR6);
 					break;	
 				case 10:
 					
