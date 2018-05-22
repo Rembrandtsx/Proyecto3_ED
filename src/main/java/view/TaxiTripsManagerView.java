@@ -212,14 +212,7 @@ public class TaxiTripsManagerView
 						System.out.println(callesFin[0]+"*****"+callesFin[1]);
 						String[] vertices=Controller.getRandomVertices(callesIni, callesFin);
 						System.out.println(vertices[0]+"****"+vertices[1]);
-//						while(vertices[0].equals(vertices[1])){
-//							callesIni = Controller.getRandomStreets();
-//							System.out.println(callesIni[0]+"*****"+callesIni[1]);
-//							callesFin= Controller.getRandomStreets();
-//							System.out.println(callesFin[0]+"*****"+callesFin[1]);
-//							vertices =  Controller.getRandomVertices(callesIni, callesFin);
-//							System.out.println(vertices[0]+"****"+vertices[1]);
-//						}
+
 						
 						LinkedList<ArcServices> lista = Controller.getShortestPathByDistance(vertices[0], vertices[1]);
 						if(lista.isEmpty()){
@@ -245,6 +238,7 @@ public class TaxiTripsManagerView
 
 
 							dibujo.dibujoRequerimiento4(lista, callesIni, callesFin);
+
 						}
 
 					
