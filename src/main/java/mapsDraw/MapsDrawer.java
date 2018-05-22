@@ -386,7 +386,7 @@ public class MapsDrawer {
 			String htmlString;
 			htmlString = FileUtils.readFileToString(htmlTemplateFile);
 			String requerimiento = "Requerimiento5";
-			String listaElemento = "<li>El camino mas corto entre 2 puntos generados aleatoreamente del archivo Streets.csv </li>\n"
+			String listaElemento = "<li>El camino mas corto entre 2 ida y vuelta puntos generados aleatoreamente del archivo Streets.csv </li>\n"
 					+ "<li>Los puntos Aleatoreamente generados del Streets.csv fueron:</li><ul>"
 						+ "<li>INICIO</li> <ul>"
 						+ "<li>lat:"+callesIni[0]+"</li>"
